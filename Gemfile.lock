@@ -144,7 +144,6 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    vuejs-rails (2.4.2)
     web-console (3.5.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -169,7 +168,6 @@ DEPENDENCIES
   rails (~> 5.1.4)
   spring
   spring-watcher-listen (~> 2.0.0)
-  vuejs-rails
   web-console (>= 3.3.0)
 
 RUBY VERSION
