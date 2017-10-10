@@ -4,7 +4,7 @@ class ShotsController < ApplicationController
   def index
     @shots = Shot.all
 
-    # render json: Shot.all
+    render json: @shots
   end
 
   def show
