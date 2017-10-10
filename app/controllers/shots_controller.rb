@@ -12,7 +12,7 @@ class ShotsController < ApplicationController
   end
 
   def create
-    obj = AWS_S3_BUCKET.object("#{Time.now.to_i}.png")
+    obj = AWS_S3_BUCKET.object("#{Shot.hashid.encode(current_user.id)}/#{Time.now.to_i}.png")
     obj.upload_file(params[:image].tempfile, acl: 'public-read')
 
     shot = current_user.shots.new

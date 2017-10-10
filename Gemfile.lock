@@ -52,7 +52,7 @@ GEM
     aws-sdk-kms (1.2.0)
       aws-sdk-core (~> 3)
       aws-sigv4 (~> 1.0)
-    aws-sdk-s3 (1.4.0)
+    aws-sdk-s3 (1.5.0)
       aws-sdk-core (~> 3)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.0)
@@ -69,6 +69,7 @@ GEM
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    hashids (1.0.4)
     i18n (0.8.6)
     jmespath (1.3.1)
     jsonapi-renderer (0.1.3)
@@ -162,6 +163,7 @@ DEPENDENCIES
   aws-sdk-s3
   bcrypt (~> 3.1.7)
   byebug
+  hashids
   knock
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)

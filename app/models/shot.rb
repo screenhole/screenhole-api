@@ -7,4 +7,8 @@ class Shot < ApplicationRecord
     AWS_S3_BUCKET.object(image_path).public_url
     # "#{AWS_S3_BUCKET.url}/#{public_url}"
   end
+
+  def self.hashid
+    Hashids.new "screenhole-shots"
+  end
 end
