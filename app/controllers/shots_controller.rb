@@ -8,7 +8,7 @@ class ShotsController < ApplicationController
   end
 
   def show
-    render json: Shot.all
+    render json: Shot.find(params[:id])
   end
 
   def create
