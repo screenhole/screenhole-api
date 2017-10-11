@@ -2,7 +2,7 @@ class ShotsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
 
   def index
-    @shots = Shot.all
+    @shots = Shot.all.reverse_order
 
     render json: @shots
   end
