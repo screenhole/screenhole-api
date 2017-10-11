@@ -29,6 +29,8 @@ namespace :backport do
 
       shot = user.shots.new
       shot.image_path = obj.key
+      shot.created_at = row[3]
+      shot.updated_at = row[4]
 
       shot.save
     end
