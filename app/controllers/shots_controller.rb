@@ -20,6 +20,10 @@ class ShotsController < ApplicationController
 
     shot.save
 
+    ActionCable.server.broadcast "shots_messages", {
+      shot: ActiveModelSerializers::SerializableResource.new(shot).as_json
+    }
+
     render json: shot
   end
 
