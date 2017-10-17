@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include Hashid::Rails
+
   validates_uniqueness_of :username, case_sensitive: false
   validates_presence_of :username
 
