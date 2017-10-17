@@ -44,6 +44,12 @@ createdb -Oscreenhole-api -Eutf8 screenhole-api_development
 createdb -Oscreenhole-api -Eutf8 screenhole-api_test
 ```
 
+### Install Redis
+
+```
+brew install redis
+```
+
 ### Install pow
 
 ```

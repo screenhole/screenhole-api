@@ -1,10 +1,12 @@
 development:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
+  channel_prefix: screenhole-api_development
 
 test:
   adapter: async
 
 production:
-  adapter: async
-  url: redis://localhost:6379/1
+  adapter: redis
+  url: <%= ENV["REDIS_URL"] %>
   channel_prefix: screenhole-api_production
