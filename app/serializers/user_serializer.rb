@@ -1,5 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :created_at
+  attribute :hashid, key: :id
+
+  attributes :username, :created_at
 
   has_many :shots
 end
