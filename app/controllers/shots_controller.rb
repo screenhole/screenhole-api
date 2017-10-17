@@ -2,9 +2,13 @@ class ShotsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
 
   def index
-    @shots = Shot.all.reverse_order
+    if params[:user_id].present?
+      shots = User.find(params[:user_id]).shots.all
+    else
+      shots = Shot.all
+    end
 
-    render json: @shots
+    render json: shots.reverse_order
   end
 
   def show
