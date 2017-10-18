@@ -2,13 +2,18 @@ class ShotsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
 
   def index
+    page = params[:page]
+    per_page = params[:per_page] || 25
+
     if params[:user_id].present?
-      shots = User.find(params[:user_id]).shots.all
+      shots = User.find(params[:user_id]).shots.page(page).per(per_page)
     else
-      shots = Shot.all
+      shots = Shot.all.page(page).per(per_page)
     end
 
-    render json: shots.reverse_order
+    shots.reverse_order!
+
+    render json: shots, meta: pagination_dict(shots)
   end
 
   def show
