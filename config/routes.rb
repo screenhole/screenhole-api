@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :create] do
     collection do
-      get 'current'
+      get 'current' => 'users#current'
 
       post 'token' => 'user_token#create'
       get 'token/refresh' => 'users#refresh_token'
