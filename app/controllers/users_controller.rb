@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, except: [:show]
+
   def show
     render json: User.find_by(username: params[:id])
   end
@@ -9,6 +11,11 @@ class UsersController < ApplicationController
 
   def current
     render json: current_user
+  end
+
+  def refresh_token
+    token = Knock::AuthToken.new(payload: { sub: current_user.id }).token
+    render json: { jwt: token }
   end
 
   def auth_params

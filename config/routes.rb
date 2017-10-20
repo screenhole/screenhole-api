@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       get 'current'
 
       post 'token' => 'user_token#create'
-      get 'token/refresh' => 'user_token#refresh'
+      get 'token/refresh' => 'users#refresh_token'
     end
 
     resources :shots, only: [:index, :show, :create, :destroy]
