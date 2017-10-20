@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   include Knock::Authenticable
 
-  before_action :refresh_token, if: :check_auth_header
+  before_action :refresh_bearer_auth_header, if: :bearer_auth_header_present
 
   def pagination_dict(collection)
     {
@@ -15,12 +15,15 @@ class ApplicationController < ActionController::API
 
   private
 
-    def check_auth_header
+    def bearer_auth_header_present
       request.env["HTTP_AUTHORIZATION"] =~ /Bearer/
     end
 
-    def refresh_token
+    def refresh_bearer_auth_header
       authenticate_user
-      headers['Authorization'] = Knock::AuthToken.new(payload: { sub: current_user.id }).token
+
+      if current_user
+        headers['Authorization'] = Knock::AuthToken.new(payload: { sub: current_user.id }).token
+      end
     end
 end
