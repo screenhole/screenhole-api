@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user, except: [:show]
+  before_action :authenticate_user, except: [:show, :create]
 
   def show
     render json: User.find_by(username: params[:id])
