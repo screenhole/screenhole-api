@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def refresh_token
-    token = Knock::AuthToken.new(payload: { sub: current_user.id }).token
+    token = Knock::AuthToken.new(payload: current_user.to_token_payload ).token
     render json: { jwt: token }
   end
 

@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
       authenticate_user
 
       if current_user
-        headers['Authorization'] = Knock::AuthToken.new(payload: { sub: current_user.id }).token
+        headers['Authorization'] = Knock::AuthToken.new(payload: current_user.to_token_payload ).token
       end
     end
 end
