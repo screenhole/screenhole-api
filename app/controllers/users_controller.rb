@@ -6,7 +6,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(username: auth_params[:username], password: auth_params[:password], password_confirmation: auth_params[:password])
+    user = User.new(
+      email: auth_params[:email],
+      username: auth_params[:username],
+      password: auth_params[:password],
+      password_confirmation: auth_params[:password]
+    )
 
     if user.save
       render json: user, meta: { jwt: Knock::AuthToken.new(payload: user.to_token_payload ).token }
@@ -25,6 +30,6 @@ class UsersController < ApplicationController
   end
 
   def auth_params
-    params.require(:auth).permit(:username, :password)
+    params.require(:auth).permit(:email, :username, :password)
   end
 end

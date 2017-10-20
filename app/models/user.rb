@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   include Hashid::Rails
 
-  validates_uniqueness_of :username, case_sensitive: false
-  validates_presence_of :username
+  validates_uniqueness_of :username, case_sensitive: false, allow_blank: false
+  validates_uniqueness_of :email, case_sensitive: false, allow_blank: false
+
+  validates_presence_of :username, :email
 
   has_secure_password
 
