@@ -13,6 +13,10 @@ class ApplicationController < ActionController::API
     }
   end
 
+  def respond_with_errors(object)
+    render json: { errors: ErrorSerializer.serialize(object) }, status: :unprocessable_entity
+  end
+
   private
 
     def bearer_auth_header_present

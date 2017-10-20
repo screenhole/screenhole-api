@@ -21,17 +21,23 @@ class ShotsController < ApplicationController
   end
 
   def create
-    obj = AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
-    obj.upload_file(params[:image].tempfile, acl: 'public-read')
-
     shot = current_user.shots.new
-    shot.image_path = obj.key
 
-    shot.save
+    begin
+      obj = AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
+      obj.upload_file(params[:image].tempfile, acl: 'public-read')
 
-    ActionCable.server.broadcast "shots_messages", ActiveModelSerializers::SerializableResource.new(shot).as_json
+      shot.image_path = obj.key
+    rescue Exception => e
+      logger.debug "missing params[:image].tempfile probably"
+    end
 
-    render json: shot
+    if shot.save
+      ActionCable.server.broadcast "shots_messages", ActiveModelSerializers::SerializableResource.new(shot).as_json
+      render json: shot
+    else
+      respond_with_errors(shot)
+    end
   end
 
   def item_params
