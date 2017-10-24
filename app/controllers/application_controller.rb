@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
   include Knock::Authenticable
 
+  serialization_scope :current_user
+
   before_action :refresh_bearer_auth_header, if: :bearer_auth_header_present
 
   def pagination_dict(collection)
