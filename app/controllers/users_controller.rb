@@ -6,6 +6,18 @@ class UsersController < ApplicationController
   end
 
   def create
+    if auth_params[:code] == nil || auth_params[:code] != ENV["INVITE_CODE"]
+      return render json: { errors: [
+        {
+          "status": 422,
+          "source": {
+            "pointer": "/data/attributes/code"
+          },
+          "detail": "is invalid"
+        }
+      ]}, status: :unprocessable_entity
+    end
+
     user = User.new(
       email: auth_params[:email],
       username: auth_params[:username],
@@ -30,6 +42,6 @@ class UsersController < ApplicationController
   end
 
   def auth_params
-    params.require(:auth).permit(:email, :username, :password)
+    params.require(:auth).permit(:email, :username, :password, :code)
   end
 end
