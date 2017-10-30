@@ -32,6 +32,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    if current_user.update_attributes(auth_params)
+      render json: current_user
+    else
+      respond_with_errors(current_user)
+    end
+  end
+
   def current
     render json: current_user
   end
@@ -42,6 +50,6 @@ class UsersController < ApplicationController
   end
 
   def auth_params
-    params.require(:auth).permit(:email, :username, :password, :code)
+    params.require(:auth).permit(:email, :username, :password, :password_confirmation, :code)
   end
 end
