@@ -95,7 +95,7 @@ echo 5000 > ~/.pow/screenhole
 ### Run app locally
 
 ```
-foreman start
+heroku local
 ```
 Go to [http://api.screenhole.dev:5000](http://api.screenhole.dev:5000).
 

@@ -12,6 +12,10 @@ class User < ApplicationRecord
 
   has_many :shots
 
+  def gravatar_hash
+    Digest::MD5.hexdigest(email || "")
+  end
+
   def to_token_payload
     { sub: hashid }
   end
