@@ -8,6 +8,6 @@ class UserSerializer < ActiveModel::Serializer
   has_many :shots
 
   def is_current_user?
-    current_user && object.id == current_user.id
+    defined? current_user && object.id == current_user.id
   end
 end

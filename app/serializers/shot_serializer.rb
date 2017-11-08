@@ -6,6 +6,6 @@ class ShotSerializer < ActiveModel::Serializer
   belongs_to :user
 
   def is_current_user?
-    current_user && object.id == current_user.id
+    defined? current_user && object.id == current_user.id
   end
 end
