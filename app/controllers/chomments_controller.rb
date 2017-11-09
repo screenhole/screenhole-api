@@ -7,8 +7,6 @@ class ChommentsController < ApplicationController
 
     chomments = Chomment.all.page(page).per(per_page)
 
-    chomments.reverse_order!
-
     render json: chomments, meta: pagination_dict(chomments)
   end
 
