@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates_presence_of :password_confirmation, if: :password_digest_changed?
 
   has_many :shots
+  has_many :chomments
 
   def gravatar_hash
     Digest::MD5.hexdigest(email || "")
