@@ -5,7 +5,7 @@ class ChommentsController < ApplicationController
     page = params[:page]
     per_page = params[:per_page] || 100
 
-    chomments = Chomment.all.page(page).per(per_page)
+    chomments = Chomment.order("created_at desc").page(page).per(per_page)
 
     render json: chomments, meta: pagination_dict(chomments)
   end
