@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :shots, only: [:index, :show, :create, :destroy]
 
+  resources :chomments, only: [:index, :create, :destroy]
+
   resources :users, only: [:show, :create] do
     collection do
       get 'current' => 'users#current'
