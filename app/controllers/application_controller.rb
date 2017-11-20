@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
 
   serialization_scope :current_user
 
+  before_action :set_raven_context
   before_action :refresh_bearer_auth_header, if: :bearer_auth_header_present
 
   def pagination_dict(collection)
@@ -20,6 +21,12 @@ class ApplicationController < ActionController::API
   end
 
   private
+
+    def set_raven_context
+      context = {}
+      context.merge!({ user_id: current_user.id, email: current_user.email }) unless current_user.blank?
+      Raven.user_context(context)
+    end
 
     def bearer_auth_header_present
       request.env["HTTP_AUTHORIZATION"] =~ /Bearer/
