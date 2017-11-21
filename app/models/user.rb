@@ -10,8 +10,8 @@ class User < ApplicationRecord
   validates_length_of :password, minimum: 6, if: :password_digest_changed?
   validates_presence_of :password_confirmation, if: :password_digest_changed?
 
-  has_many :shots
-  has_many :chomments
+  has_many :shots, dependent: :destroy
+  has_many :chomments, dependent: :destroy
 
   def gravatar_hash
     Digest::MD5.hexdigest(email || "")
