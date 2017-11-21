@@ -40,6 +40,28 @@ class ShotsController < ApplicationController
     end
   end
 
+  def destroy
+    shot = current_user.shots.find_by_hashid(params[:id])
+
+    if shot.nil?
+      render json: {
+        status: 400,
+        detail: "Could not find grab"
+      }
+    elsif shot.destroy
+      # TODO: send delete over ActionCable
+      render json: {
+        status: 200,
+        detail: "Success"
+      }
+    else
+      render json: {
+        status: 400,
+        detail: "Could not destroy grab"
+      }
+    end
+  end
+
   def item_params
     params.require(:shot).permit(:image)
   end

@@ -14,6 +14,6 @@ Rails.application.routes.draw do
       get 'token/refresh' => 'users#refresh_token'
     end
 
-    resources :shots, only: [:index, :show, :create, :destroy]
+    resources :shots, only: [:index, :show]
   end
 end
