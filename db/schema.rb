@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109231407) do
+ActiveRecord::Schema.define(version: 20171129202230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,18 @@ ActiveRecord::Schema.define(version: 20171109231407) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["user_id"], name: "index_chomments_on_user_id"
+  end
+
+  create_table "memos", force: :cascade do |t|
+    t.integer "variant", default: 0
+    t.string "media_path"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "shot_id"
+    t.index ["shot_id"], name: "index_memos_on_shot_id"
+    t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
   create_table "shots", force: :cascade do |t|

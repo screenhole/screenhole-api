@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root to: 'shots#index'
 
-  resources :shots, only: [:index, :show, :create, :destroy]
+  resources :shots, only: [:index, :show, :create, :destroy] do
+    resources :memos, only: [:index, :update, :create, :destroy]
+  end
 
   resources :chomments, only: [:index, :create, :destroy]
 

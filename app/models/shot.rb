@@ -3,6 +3,8 @@ class Shot < ApplicationRecord
   
   belongs_to :user
 
+  has_many :memos, dependent: :destroy
+
   validates_presence_of :image_path
 
   after_destroy :delete_media

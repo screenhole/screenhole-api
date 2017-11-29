@@ -1,11 +1,10 @@
-class ShotSerializer < ActiveModel::Serializer
+class MemoSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
 
-  attributes :created_at, :image_public_url
+  attributes :created_at, :variant, :message, :media_path
 
   belongs_to :user
-
-  has_many :memos
+  belongs_to :shot
 
   def is_current_user?
     defined? current_user && object.user_id == current_user.id
