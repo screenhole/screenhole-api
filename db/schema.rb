@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129202230) do
+ActiveRecord::Schema.define(version: 20171130155557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(version: 20171129202230) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "shot_id"
+    t.boolean "pending", default: true
+    t.integer "calling_code"
+    t.index ["calling_code"], name: "index_memos_on_calling_code"
     t.index ["shot_id"], name: "index_memos_on_shot_id"
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
