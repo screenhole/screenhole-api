@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'shots#index'
 
+  post '/svc/memo/voice' => 'services#voice_memo'
+
   resources :shots, only: [:index, :show, :create, :destroy] do
     resources :memos, only: [:index, :show, :update, :create, :destroy]
   end
