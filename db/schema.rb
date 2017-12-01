@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20171130155557) do
     t.bigint "shot_id"
     t.boolean "pending", default: true
     t.integer "calling_code"
-    t.index ["calling_code"], name: "index_memos_on_calling_code"
+    t.index ["calling_code"], name: "index_memos_on_calling_code", unique: true
     t.index ["shot_id"], name: "index_memos_on_shot_id"
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
