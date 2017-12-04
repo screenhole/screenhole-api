@@ -21,15 +21,21 @@ class ServicesController < ApplicationController
       } and return
     end
 
-    # TODO: don't allow re-calls
-
-    # save call_sid
-    if (params.has_key? :call_sid)
-      memo.call_sid = params[:call_sid]
+    if params.has_key? :call_sid
+      if memo.call_sid.blank?
+        # save call_sid
+        memo.call_sid = params[:call_sid]
+      elsif memo.call_sid != params[:call_sid]
+        # don't allow re-calls (changing call_sid)
+        render status: 400, json: {
+          status: 400,
+          detail: "Can't reuse calling code"
+        } and return
+      end
     end
 
     # transload recording
-    if (params.has_key? :recording_url)
+    if params.has_key? :recording_url
       # TODO: transload to S3
       # TODO: delete from Twilio
       memo.media_path = params[:recording_url]
@@ -37,7 +43,7 @@ class ServicesController < ApplicationController
     end
 
     # save transcription_text
-    if (params.has_key? :transcription_text)
+    if params.has_key? :transcription_text
       memo.message = params[:transcription_text]
     end
 
