@@ -5,7 +5,7 @@ class MemosController < ApplicationController
     shot = Shot.find_by_hashid(params[:shot_id])
 
     unless shot.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Shot"
       } and return
@@ -18,7 +18,7 @@ class MemosController < ApplicationController
     shot = Shot.find_by_hashid(params[:shot_id])
 
     unless shot.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Shot"
       } and return
@@ -27,7 +27,7 @@ class MemosController < ApplicationController
     memo = shot.memos.find_by_hashid(params[:id])
 
     unless memo.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Memo"
       } and return
@@ -40,14 +40,14 @@ class MemosController < ApplicationController
     memo = current_user.memos.find_by_hashid(params[:id])
 
     unless memo.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Memo"
       } and return
     end
 
     unless memo.shot.present? and memo.shot.hashid == params[:shot_id]
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "shot_id doesn't match memo's"
       } and return
@@ -66,7 +66,7 @@ class MemosController < ApplicationController
     shot = Shot.find_by_hashid(params[:shot_id])
 
     unless shot.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Shot"
       } and return
@@ -89,14 +89,14 @@ class MemosController < ApplicationController
     memo = current_user.memos.find_by_hashid(params[:id])
 
     unless memo.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Memo"
       } and return
     end
 
     unless memo.shot.present? and memo.shot.hashid == params[:shot_id]
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "shot_id doesn't match memo's"
       } and return
@@ -109,7 +109,7 @@ class MemosController < ApplicationController
         detail: "Success"
       }
     else
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Could not destroy memo"
       }

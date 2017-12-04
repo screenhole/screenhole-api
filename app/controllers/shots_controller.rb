@@ -44,7 +44,7 @@ class ShotsController < ApplicationController
     shot = current_user.shots.find_by_hashid(params[:id])
 
     if shot.nil?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Could not find grab"
       }
@@ -55,7 +55,7 @@ class ShotsController < ApplicationController
         detail: "Success"
       }
     else
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Could not destroy grab"
       }

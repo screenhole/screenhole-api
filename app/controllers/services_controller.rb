@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
   def voice_memo
+    # load by calling_code if it's present
     if params.has_key? :calling_code
       memo = Memo.find_by(calling_code: params[:calling_code])
     elsif params.has_key? :call_sid
@@ -7,19 +8,27 @@ class ServicesController < ApplicationController
     end
 
     unless memo.present?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Couldn't find Memo"
       } and return
     end
 
     unless memo.voice?
-      render json: {
+      render status: 400, json: {
         status: 400,
         detail: "Memo isn't voice"
       } and return
     end
 
+    # TODO: don't allow re-calls
+
+    # save call_sid
+    if (params.has_key? :call_sid)
+      memo.call_sid = params[:call_sid]
+    end
+
+    # transload recording
     if (params.has_key? :recording_url)
       # TODO: transload to S3
       # TODO: delete from Twilio
@@ -27,6 +36,7 @@ class ServicesController < ApplicationController
       memo.pending = false
     end
 
+    # save transcription_text
     if (params.has_key? :transcription_text)
       memo.message = params[:transcription_text]
     end
