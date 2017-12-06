@@ -17,7 +17,7 @@ class ShotsController < ApplicationController
   end
 
   def show
-    render json: Shot.find(params[:id]), include: [ 'memos.user' ]
+    render json: Shot.find(params[:id]), include: [ 'user', 'memos.user' ]
   end
 
   def create
