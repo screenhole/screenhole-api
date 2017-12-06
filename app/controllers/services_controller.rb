@@ -38,7 +38,7 @@ class ServicesController < ApplicationController
     if params.has_key? :recording_url
       # TODO: transload to S3
       # TODO: delete from Twilio
-      memo.media_path = params[:recording_url]
+      memo.media_path = "#{params[:recording_url]}.mp3"
       memo.pending = false
     end
 
