@@ -5,13 +5,18 @@ class MemoSerializer < ActiveModel::Serializer
     :variant,
     :message,
     :media_path,
-    :pending,
-    :calling_code
+    :pending
+
+  attribute :calling_code, if: :is_current_user?
 
   belongs_to :user
   belongs_to :shot
 
   def is_current_user?
-    defined? current_user && object.user_id == current_user.id
+    begin
+      object.user_id == current_user.id
+    rescue
+      false
+    end
   end
 end
