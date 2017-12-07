@@ -3,6 +3,11 @@ class Chomment < ApplicationRecord
   
   belongs_to :user
 
+  enum variant: [
+    :generic,
+    :voice_memo,
+  ]
+
   validates_presence_of :message
 
   after_save :channel_broadcast

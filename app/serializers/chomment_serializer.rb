@@ -1,7 +1,7 @@
 class ChommentSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
 
-  attributes :created_at, :message
+  attributes :created_at, :variant, :message
 
   belongs_to :user
 
