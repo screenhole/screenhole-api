@@ -56,7 +56,6 @@ class MemosController < ApplicationController
     memo.update_attributes(item_params)
 
     if memo.save
-      ActionCable.server.broadcast "memos_messages", ActiveModelSerializers::SerializableResource.new(memo).as_json
       render json: memo
     else
       respond_with_errors(memo)
@@ -80,7 +79,6 @@ class MemosController < ApplicationController
     memo.update_attributes(item_params)
 
     if memo.save
-      ActionCable.server.broadcast "memos_messages", ActiveModelSerializers::SerializableResource.new(memo).as_json
       render json: memo
     else
       respond_with_errors(memo)

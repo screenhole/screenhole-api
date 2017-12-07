@@ -16,7 +16,6 @@ class ChommentsController < ApplicationController
     chomment.update_attributes(item_params)
 
     if chomment.save
-      ActionCable.server.broadcast "chomments_messages", ActiveModelSerializers::SerializableResource.new(chomment).as_json
       render json: chomment
     else
       respond_with_errors(chomment)
