@@ -13,9 +13,7 @@ class ChommentsController < ApplicationController
   def create
     chomment = current_user.chomments.new
 
-    chomment.update_attributes(item_params)
-
-    if chomment.save
+    if chomment.update_attributes(item_params)
       render json: chomment
     else
       respond_with_errors(chomment)
