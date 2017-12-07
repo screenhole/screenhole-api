@@ -3,6 +3,8 @@ class Chomment < ApplicationRecord
   
   belongs_to :user
 
+  belongs_to :cross_ref, polymorphic: true, optional: true
+
   enum variant: [
     :generic,
     :voice_memo,

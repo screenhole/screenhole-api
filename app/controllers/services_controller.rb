@@ -45,7 +45,11 @@ class ServicesController < ApplicationController
     # save transcription_text
     if params.has_key? :transcription_text
       memo.message = params[:transcription_text]
-      memo.user.chomments.create(variant: :voice_memo, message: memo.message)
+      memo.user.chomments.create(
+        variant: :voice_memo,
+        cross_ref: memo.shot,
+        message: memo.message,
+      )
     end
 
     if memo.save
