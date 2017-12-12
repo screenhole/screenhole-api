@@ -9,9 +9,10 @@ class Shot < ApplicationRecord
 
   after_destroy :delete_media
 
-  def image_public_url
-    AWS_S3_BUCKET.object(image_path).public_url
-    # "#{AWS_S3_BUCKET.url}/#{public_url}"
+  def image_public_url(direct=false)
+    url = AWS_S3_BUCKET.object(image_path).public_url
+    url.gsub!('s3.amazonaws.com', 'accelerator.net') unless direct
+    url
   end
 
   private
