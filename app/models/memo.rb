@@ -14,6 +14,11 @@ class Memo < ApplicationRecord
   before_create :generate_calling_code
   after_save :channel_broadcast
 
+  def media_public_url
+    return "" if self.media_path.blank?
+    AWS_S3_BUCKET.object(self.media_path).public_url
+  end
+
   def generate_calling_code
     # actual code is 5 digits. trailing digits denote env.
     # e.g. 11111 is prod, 111119 is staging.

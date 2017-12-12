@@ -36,9 +36,12 @@ class ServicesController < ApplicationController
 
     # transload recording
     if params.has_key? :recording_url
-      # TODO: transload to S3
+      # TODO: wait for copy to update model
+
+      memo.media_path = "#{memo.user.hashid}/voice_memo/#{Time.now.to_i}.mp3"
+      TransloadRemoteFile.new("#{params[:recording_url]}.mp3").upload_to_s3(memo.media_path)
+
       # TODO: delete from Twilio
-      memo.media_path = "#{params[:recording_url]}.mp3"
       memo.pending = false
     end
 

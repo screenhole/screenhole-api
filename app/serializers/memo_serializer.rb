@@ -4,7 +4,7 @@ class MemoSerializer < ActiveModel::Serializer
   attributes :created_at,
     :variant,
     :message,
-    :media_path,
+    :media_public_url,
     :pending
 
   attribute :calling_code, if: :is_current_user?
