@@ -7,6 +7,14 @@ class UserSerializer < ActiveModel::Serializer
 
   has_many :shots
 
+  attribute :stats
+
+  def stats
+    {
+      grabs: object.shots.size
+    }
+  end
+
   def is_current_user?
     begin
       object.id == current_user.id
