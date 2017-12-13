@@ -1,7 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
 
-  attributes :username, :created_at, :gravatar_hash
+  attributes :username, :created_at, :gravatar_hash, :name, :bio
 
   attribute :email, if: :is_current_user?
 
