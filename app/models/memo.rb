@@ -16,6 +16,7 @@ class Memo < ApplicationRecord
 
   def media_public_url
     return "" if self.media_path.blank?
+    return self.media_path if self.media_path.start_with? "http"
     AWS_S3_BUCKET.object(self.media_path).public_url
   end
 
