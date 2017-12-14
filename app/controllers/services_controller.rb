@@ -39,7 +39,7 @@ class ServicesController < ApplicationController
       # TODO: wait for copy to update model
 
       memo.media_path = "#{memo.user.hashid}/voice_memo/#{Time.now.to_i}.mp3"
-      TransloadRemoteFile.new("#{params[:recording_url]}.mp3").upload_to_s3(memo.media_path)
+      TransloadRemoteFile.new("#{params[:recording_url]}.mp3").upload_to_s3(memo.media_path, 'audio/mpeg')
 
       # TODO: delete from Twilio
       memo.pending = false

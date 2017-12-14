@@ -9,9 +9,13 @@ class TransloadRemoteFile
     URI.parse(URI.escape(@remote_url))
   end
 
-  def upload_to_s3(object_path)
+  def upload_to_s3(object_path, content_type=nil)
     open(remote_url) do |file|
-      AWS_S3_BUCKET.object(object_path).put(body: file, acl: 'public-read')
+      if content_type.present?
+        AWS_S3_BUCKET.object(object_path).put(body: file, acl: 'public-read', content_type: content_type)
+      else
+        AWS_S3_BUCKET.object(object_path).put(body: file, acl: 'public-read')
+      end
     end
   end
 end

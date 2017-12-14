@@ -15,7 +15,7 @@ namespace :backport do
       puts "=== TRANSLOADING memo #{memo.id}"
 
       object_path = "#{memo.user.hashid}/voice_memo/#{Time.now.to_i}.mp3"
-      TransloadRemoteFile.new(memo.media_path).upload_to_s3(object_path)
+      TransloadRemoteFile.new(memo.media_path).upload_to_s3(object_path, 'audio/mpeg')
 
       puts memo.media_path, object_path
 
