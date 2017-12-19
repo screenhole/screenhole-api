@@ -53,6 +53,9 @@ class ServicesController < ApplicationController
         cross_ref: memo.shot,
         message: memo.message,
       )
+
+      # send notification to shot user that caller left a voice memo
+      memo.shot.user.create_activity(:voice_memo, owner: memo.user, params: { summary: memo.message })
     end
 
     if memo.save
