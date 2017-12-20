@@ -11,9 +11,16 @@ class UserSerializer < ActiveModel::Serializer
   attribute :stats
 
   def stats
-    {
+    stats = {
       grabs: object.shots.size
     }
+
+    # private stats
+    stats.merge!({
+      buttcoins: object.buttcoin_balance
+    }) if is_current_user?
+
+    stats
   end
 
   def is_current_user?
