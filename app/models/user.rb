@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   include Hashid::Rails
-  include PublicActivity::Common
 
   validates_uniqueness_of :username, case_sensitive: false, allow_blank: false
   validates_uniqueness_of :email, case_sensitive: false, allow_blank: false
@@ -14,6 +13,8 @@ class User < ApplicationRecord
   has_many :shots, dependent: :destroy
   has_many :chomments, dependent: :destroy
   has_many :memos, dependent: :destroy
+
+  has_many :notes
 
   def gravatar_hash
     Digest::MD5.hexdigest(email || "")
