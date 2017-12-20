@@ -34,6 +34,7 @@ class ShotsController < ApplicationController
 
     if shot.save
       ActionCable.server.broadcast "shots_messages", ActiveModelSerializers::SerializableResource.new(shot).as_json
+      current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_shot], "Created Grab #{shot.hashid}")
       render json: shot
     else
       respond_with_errors(shot)

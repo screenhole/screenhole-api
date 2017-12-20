@@ -16,6 +16,14 @@ class User < ApplicationRecord
 
   has_many :notes
 
+  def buttcoin_transaction(amount, note=nil)
+    Buttcoin.create(user: self, amount: amount, note: note)
+  end
+
+  def buttcoin_balance
+    Buttcoin.where(user: self).sum(:amount)
+  end
+
   def gravatar_hash
     Digest::MD5.hexdigest(email || "")
   end

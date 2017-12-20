@@ -11,9 +11,16 @@ class UserSerializer < ActiveModel::Serializer
   attribute :stats
 
   def stats
-    {
-      grabs: object.shots.size
+    stats = {
+      grabs: object.shots.size,
     }
+
+    # private stats
+    if is_current_user?
+      stats[:buttcoins] = object.buttcoin_balance
+    end
+
+    stats
   end
 
   def is_current_user?
