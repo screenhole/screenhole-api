@@ -15,14 +15,13 @@ class User < ApplicationRecord
   has_many :memos, dependent: :destroy
 
   has_many :notes
-  # has_many :buttcoin_ledgers
 
   def buttcoin_transaction(amount, note=nil)
-    ButtcoinLedger.create(user: self, amount: amount, note: note)
+    Buttcoin.create(user: self, amount: amount, note: note)
   end
 
   def buttcoin_balance
-    ButtcoinLedger.where(user: self).sum(:amount)
+    Buttcoin.where(user: self).sum(:amount)
   end
 
   def gravatar_hash

@@ -1,6 +1,6 @@
-class CreateButtcoinLedgers < ActiveRecord::Migration[5.1]
+class CreateButtcoins < ActiveRecord::Migration[5.1]
   def change
-    create_table :buttcoin_ledgers do |t|
+    create_table :buttcoins do |t|
       t.references :user, foreign_key: true
       t.integer :amount
       t.string :note

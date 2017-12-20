@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ButtcoinLedgerTest < ActiveSupport::TestCase
+class ButtcoinTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
