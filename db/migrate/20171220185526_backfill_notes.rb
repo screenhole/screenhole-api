@@ -2,7 +2,7 @@ class BackfillNotes < ActiveRecord::Migration[5.1]
   def up
     Memo.find_each do |memo|
       puts "[:voice_memo] memo: #{memo.id} user: #{memo.shot.user.id} actor: #{memo.user.id} cross_ref: #{memo.id}"
-      memo.shot.user.notes.create(key: :voice_memo, actor: memo.user, cross_ref: memo, meta: { summary: memo.message })
+      memo.shot.user.notes.create(variant: :voice_memo, actor: memo.user, cross_ref: memo, meta: { summary: memo.message })
     end
 
     Chomment.where("message like ?", "%@%").each do |chomment|

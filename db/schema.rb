@@ -49,14 +49,14 @@ ActiveRecord::Schema.define(version: 20171220185526) do
     t.bigint "actor_id"
     t.string "cross_ref_type"
     t.bigint "cross_ref_id"
-    t.string "key"
+    t.string "variant"
     t.text "meta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notes_on_actor_id"
     t.index ["cross_ref_type", "cross_ref_id"], name: "index_notes_on_cross_ref_type_and_cross_ref_id"
-    t.index ["key"], name: "index_notes_on_key"
     t.index ["user_id"], name: "index_notes_on_user_id"
+    t.index ["variant"], name: "index_notes_on_variant"
   end
 
   create_table "shots", force: :cascade do |t|

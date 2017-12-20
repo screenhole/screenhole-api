@@ -31,7 +31,7 @@ class Chomment < ApplicationRecord
 
   def notify_at_replied_users
     at_replied_users.each do |replied_user|
-      replied_user.notes.create(key: :at_reply, actor: self.user, cross_ref: self, meta: { summary: self.message })
+      replied_user.notes.create(variant: :at_reply, actor: self.user, cross_ref: self, meta: { summary: self.message })
     end
   end
 

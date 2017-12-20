@@ -6,6 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :email, if: :is_current_user?
 
   has_many :shots
+  has_many :notes, if: :is_current_user?
 
   attribute :stats
 
