@@ -1,7 +1,7 @@
 if Rails.env.development?
   Aws.config.update({
     region: 'us-east-1',
-    :endpoint => 'http://fakes3.dev:4567/',
+    :endpoint => 'http://fakes3.test:4567/',
     credentials: Aws::Credentials.new('FAKE_AWS_KEY', 'FAKE_AWS_SECRET')
   })
 else

@@ -14,6 +14,27 @@ class Chomment < ApplicationRecord
 
   after_save :channel_broadcast
 
+  def at_replies
+    message.scan(/@\w+/)
+  end
+
+  def at_replied_users
+    users = []
+
+    at_replies.each do |name|
+      user = User.find_by(username: name[1..-1].downcase)
+      users.push user if user.present?
+    end
+
+    users
+  end
+
+  def notify_at_replied_users
+    at_replied_users.each do |replied_user|
+      replied_user.notes.create(variant: :at_reply, actor: self.user, cross_ref: self, meta: { summary: self.message })
+    end
+  end
+
   def channel_broadcast
     ActionCable.server.broadcast "chomments_messages", ActiveModelSerializers::SerializableResource.new(self).as_json
   end

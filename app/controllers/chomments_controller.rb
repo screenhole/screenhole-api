@@ -14,6 +14,7 @@ class ChommentsController < ApplicationController
     chomment = current_user.chomments.new
 
     if chomment.update_attributes(item_params)
+      chomment.notify_at_replied_users
       render json: chomment
     else
       respond_with_errors(chomment)

@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :chomments, dependent: :destroy
   has_many :memos, dependent: :destroy
 
+  has_many :notes
+
   def gravatar_hash
     Digest::MD5.hexdigest(email || "")
   end

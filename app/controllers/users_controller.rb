@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user, except: [:show, :create]
 
   def show
-    render json: User.find_by(username: params[:id])
+    render json: User.find_by(username: params[:id]), include: ['shots.*', 'notes.*']
   end
 
   def create
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   end
 
   def current
-    render json: current_user
+    render json: current_user, include: ['shots.*', 'notes.*']
   end
 
   def refresh_token
