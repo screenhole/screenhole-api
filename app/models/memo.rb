@@ -4,7 +4,7 @@ class Memo < ApplicationRecord
   default_scope { order(created_at: :asc) }
 
   belongs_to :user
-  belongs_to :shot
+  belongs_to :grab
 
   enum variant: [
     :generic,

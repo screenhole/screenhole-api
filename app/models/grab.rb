@@ -1,4 +1,4 @@
-class Shot < ApplicationRecord
+class Grab < ApplicationRecord
   include Hashid::Rails
   
   belongs_to :user

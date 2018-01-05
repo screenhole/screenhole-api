@@ -50,16 +50,16 @@ class ServicesController < ApplicationController
       memo.message = params[:transcription_text]
       memo.user.chomments.create(
         variant: :voice_memo,
-        cross_ref: memo.shot,
+        cross_ref: memo.grab,
         message: memo.message,
       )
 
       # distribute buttcoins
       memo.user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_voice_memo], "Created Voice Memo #{memo.hashid}")
-      memo.shot.user.buttcoin_transaction(Buttcoin::AMOUNTS[:receive_voice_memo], "Received Voice Memo #{memo.hashid}")
+      memo.grab.user.buttcoin_transaction(Buttcoin::AMOUNTS[:receive_voice_memo], "Received Voice Memo #{memo.hashid}")
 
-      # send notification to shot user that caller left a voice memo
-      memo.shot.user.notes.create(variant: :voice_memo, actor: memo.user, cross_ref: memo, meta: { summary: memo.message })
+      # send notification to grab user that caller left a voice memo
+      memo.grab.user.notes.create(variant: :voice_memo, actor: memo.user, cross_ref: memo, meta: { summary: memo.message })
     end
 
     if memo.save

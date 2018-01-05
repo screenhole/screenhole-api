@@ -2,29 +2,29 @@ class MemosController < ApplicationController
   before_action :authenticate_user, except: [:index]
 
   def index
-    shot = Shot.find_by_hashid(params[:shot_id])
+    grab = Grab.find_by_hashid(params[:grab_id])
 
-    unless shot.present?
+    unless grab.present?
       render status: 400, json: {
         status: 400,
-        detail: "Couldn't find Shot"
+        detail: "Couldn't find Grab"
       } and return
     end
 
-    render json: shot.memos
+    render json: grab.memos
   end
 
   def show
-    shot = Shot.find_by_hashid(params[:shot_id])
+    grab = Grab.find_by_hashid(params[:grab_id])
 
-    unless shot.present?
+    unless grab.present?
       render status: 400, json: {
         status: 400,
-        detail: "Couldn't find Shot"
+        detail: "Couldn't find Grab"
       } and return
     end
 
-    memo = shot.memos.find_by_hashid(params[:id])
+    memo = grab.memos.find_by_hashid(params[:id])
 
     unless memo.present?
       render status: 400, json: {
@@ -46,10 +46,10 @@ class MemosController < ApplicationController
       } and return
     end
 
-    unless memo.shot.present? and memo.shot.hashid == params[:shot_id]
+    unless memo.grab.present? and memo.grab.hashid == params[:grab_id]
       render status: 400, json: {
         status: 400,
-        detail: "shot_id doesn't match memo's"
+        detail: "grab_id doesn't match memo's"
       } and return
     end
 
@@ -63,16 +63,16 @@ class MemosController < ApplicationController
   end
 
   def create
-    shot = Shot.find_by_hashid(params[:shot_id])
+    grab = Grab.find_by_hashid(params[:grab_id])
 
-    unless shot.present?
+    unless grab.present?
       render status: 400, json: {
         status: 400,
-        detail: "Couldn't find Shot"
+        detail: "Couldn't find Grab"
       } and return
     end
 
-    memo = shot.memos.new
+    memo = grab.memos.new
 
     memo.user = current_user
 
@@ -95,10 +95,10 @@ class MemosController < ApplicationController
       } and return
     end
 
-    unless memo.shot.present? and memo.shot.hashid == params[:shot_id]
+    unless memo.grab.present? and memo.grab.hashid == params[:grab_id]
       render status: 400, json: {
         status: 400,
-        detail: "shot_id doesn't match memo's"
+        detail: "grab_id doesn't match memo's"
       } and return
     end
 

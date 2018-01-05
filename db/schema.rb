@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171220211744) do
+ActiveRecord::Schema.define(version: 20180105212334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 20171220211744) do
     t.index ["user_id"], name: "index_chomments_on_user_id"
   end
 
+  create_table "grabs", force: :cascade do |t|
+    t.string "image_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_grabs_on_user_id"
+  end
+
   create_table "memos", force: :cascade do |t|
     t.integer "variant", default: 0
     t.string "media_path"
@@ -43,13 +51,13 @@ ActiveRecord::Schema.define(version: 20171220211744) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.bigint "shot_id"
+    t.bigint "grab_id"
     t.boolean "pending", default: true
     t.integer "calling_code"
     t.string "call_sid"
     t.index ["call_sid"], name: "index_memos_on_call_sid", unique: true
     t.index ["calling_code"], name: "index_memos_on_calling_code", unique: true
-    t.index ["shot_id"], name: "index_memos_on_shot_id"
+    t.index ["grab_id"], name: "index_memos_on_grab_id"
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
@@ -66,14 +74,6 @@ ActiveRecord::Schema.define(version: 20171220211744) do
     t.index ["cross_ref_type", "cross_ref_id"], name: "index_notes_on_cross_ref_type_and_cross_ref_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
     t.index ["variant"], name: "index_notes_on_variant"
-  end
-
-  create_table "shots", force: :cascade do |t|
-    t.string "image_path"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_shots_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

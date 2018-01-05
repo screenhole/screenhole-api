@@ -1,4 +1,4 @@
-class ShotSerializer < ActiveModel::Serializer
+class GrabSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
 
   attributes :created_at, :image_public_url

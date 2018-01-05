@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates_length_of :password, minimum: 6, if: :password_digest_changed?
   validates_presence_of :password_confirmation, if: :password_digest_changed?
 
-  has_many :shots, dependent: :destroy
+  has_many :grabs, dependent: :destroy
   has_many :chomments, dependent: :destroy
   has_many :memos, dependent: :destroy
 

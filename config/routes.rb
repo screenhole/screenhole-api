@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  root to: 'shots#index'
+  root to: 'grabs#index'
 
   post '/svc/memo/voice' => 'services#voice_memo'
 
-  resources :shots, only: [:index, :show, :create, :destroy] do
+  resources :grabs, only: [:index, :show, :create, :destroy] do
     resources :memos, only: [:index, :show, :update, :create, :destroy]
   end
 
@@ -18,6 +18,6 @@ Rails.application.routes.draw do
       get 'token/refresh' => 'users#refresh_token'
     end
 
-    resources :shots, only: [:index, :show]
+    resources :grabs, only: [:index, :show]
   end
 end

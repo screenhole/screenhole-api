@@ -5,14 +5,14 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :email, if: :is_current_user?
 
-  has_many :shots
+  has_many :grabs
   has_many :notes, if: :is_current_user?
 
   attribute :stats
 
   def stats
     stats = {
-      grabs: object.shots.size,
+      grabs: object.grabs.size,
     }
 
     # private stats

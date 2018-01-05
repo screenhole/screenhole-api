@@ -10,7 +10,7 @@ class MemoSerializer < ActiveModel::Serializer
   attribute :calling_code, if: :is_current_user?
 
   belongs_to :user
-  belongs_to :shot
+  belongs_to :grab
 
   def is_current_user?
     begin
