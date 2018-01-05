@@ -20,4 +20,6 @@ Rails.application.routes.draw do
 
     resources :grabs, only: [:index, :show]
   end
+
+  post '/shots' => 'grabs#create'
 end
