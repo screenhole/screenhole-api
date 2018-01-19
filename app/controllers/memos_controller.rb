@@ -11,7 +11,7 @@ class MemosController < ApplicationController
       } and return
     end
 
-    render json: grab.memos
+    render json: grab.memos.where(pending: false)
   end
 
   def show

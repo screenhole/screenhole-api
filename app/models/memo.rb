@@ -9,7 +9,10 @@ class Memo < ApplicationRecord
   enum variant: [
     :generic,
     :voice,
+    :sticker,
   ]
+
+  serialize :meta, Hash
 
   before_create :generate_calling_code
   after_save :channel_broadcast
@@ -28,6 +31,7 @@ class Memo < ApplicationRecord
   end
 
   def channel_broadcast
+    return if self.pending
     ActionCable.server.broadcast "memos_messages", ActiveModelSerializers::SerializableResource.new(self).as_json
   end
 end
