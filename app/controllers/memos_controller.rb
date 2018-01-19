@@ -53,7 +53,7 @@ class MemosController < ApplicationController
       } and return
     end
 
-    memo.update_attributes(item_params)
+    memo.assign_attributes(item_params)
 
     if memo.save
       render json: memo
@@ -76,7 +76,7 @@ class MemosController < ApplicationController
 
     memo.user = current_user
 
-    memo.update_attributes(item_params)
+    memo.assign_attributes(item_params)
 
     if memo.save
       render json: memo
@@ -117,6 +117,8 @@ class MemosController < ApplicationController
   end
 
   def item_params
-    params.require(:memo).permit(:variant, :media_path, :message)
+    meta_keys = params[:memo][:meta].keys
+
+    params.require(:memo).permit(:variant, :pending, :media_path, :message, meta: meta_keys)
   end
 end
