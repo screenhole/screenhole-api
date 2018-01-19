@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'grabs#index'
 
+  post "/graphql" => "graphql#execute"
   post '/svc/memo/voice' => 'services#voice_memo'
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
