@@ -10,6 +10,16 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :stats
 
+  attribute :roles
+
+  def roles
+    roles = []
+
+    roles.push('admin') if object.id < 3
+
+    roles
+  end
+
   def stats
     stats = {
       grabs: object.grabs.size,
