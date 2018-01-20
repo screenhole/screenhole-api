@@ -117,7 +117,7 @@ class MemosController < ApplicationController
   end
 
   def item_params
-    meta_keys = params[:memo][:meta].keys
+    meta_keys = params[:memo][:meta].try(:keys)
 
     params.require(:memo).permit(:variant, :pending, :media_path, :message, meta: meta_keys)
   end
