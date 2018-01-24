@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   resources :chomments, only: [:index, :create, :destroy]
 
   resources :users, only: [:show, :create] do
+    post 'block' => 'users#block'
+    post 'unblock' => 'users#unblock'
+
     collection do
       get 'current' => 'users#current'
       post 'current' => 'users#update'

@@ -40,6 +40,37 @@ class UsersController < ApplicationController
     end
   end
 
+  def block
+    blocked = current_user.blocked
+  
+    unless params[:user_id] == current_user.hashid
+      blocked.push params[:user_id]
+    end
+
+    blocked.uniq!
+    blocked.map! { |x| x.is_a?(Integer) ? User.encode_id(x) : x }
+
+    if current_user.update_attribute(:blocked, blocked)
+      render json: current_user
+    else
+      respond_with_errors(current_user)
+    end
+  end
+
+  def unblock
+    blocked = current_user.blocked
+    blocked -= [params[:user_id]]
+
+    blocked.uniq!
+    blocked.map! { |x| x.is_a?(Integer) ? User.encode_id(x) : x }
+
+    if current_user.update_attribute(:blocked, blocked)
+      render json: current_user
+    else
+      respond_with_errors(current_user)
+    end
+  end
+
   def current
     render json: current_user, include: ['grabs.*', 'notes.*']
   end

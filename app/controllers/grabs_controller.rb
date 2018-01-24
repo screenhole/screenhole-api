@@ -9,7 +9,12 @@ class GrabsController < ApplicationController
       grabs = User.find(params[:user_id]).grabs.page(page).per(per_page)
     else
       blocked_users = []
-      blocked_users = current_user.blocked if current_user
+
+      if current_user
+        blocked_users = current_user.blocked
+        blocked_users.map! { |x| User.decode_id x }
+      end
+
       grabs = Grab.where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
     end
 
