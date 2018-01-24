@@ -15,7 +15,7 @@ class UserSerializer < ActiveModel::Serializer
   def roles
     roles = []
 
-    roles.push('admin') if object.id < 3
+    roles.push('admin') if [0,1,6].index(object.id) != nil
 
     roles
   end
