@@ -70,6 +70,13 @@ class GrabsController < ApplicationController
     end
   end
 
+  def report
+    render json: {
+      status: 200,
+      detail: "Success"
+    }
+  end
+
   def item_params
     params.require(:grab).permit(:image)
   end

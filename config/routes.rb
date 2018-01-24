@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   post '/svc/memo/voice' => 'services#voice_memo'
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
+    post 'report' => 'grabs#report'
+
     resources :memos, only: [:index, :show, :update, :create, :destroy]
   end
 
