@@ -8,7 +8,8 @@ class GrabsController < ApplicationController
     if params[:user_id].present?
       grabs = User.find(params[:user_id]).grabs.page(page).per(per_page)
     else
-      grabs = Grab.all.page(page).per(per_page)
+      blocked_users = []
+      grabs = Grab.where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
     end
 
     grabs.reverse_order!
