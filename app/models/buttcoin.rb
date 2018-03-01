@@ -11,6 +11,10 @@ class Buttcoin < ApplicationRecord
     receive_voice_memo: 13,
   }
 
+  COSTS = {
+    generate_invite: -200,
+  }
+
   def channel_broadcast
     ActionCable.server.broadcast "buttcoins_messages", ActiveModelSerializers::SerializableResource.new(self).as_json
   end

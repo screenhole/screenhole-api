@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :memos, dependent: :destroy
 
   has_many :notes
+  has_many :invites
 
   def buttcoin_transaction(amount, note=nil)
     Buttcoin.create(user: self, amount: amount, note: note)
