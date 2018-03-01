@@ -6,7 +6,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    if auth_params[:code] == nil || auth_params[:code] != ENV["INVITE_CODE"]
+    invite = Invite.find_by(code: (nil || auth_params[:code]).downcase)
+
+    if ! invite || invite.redeemed
       return render json: { errors: [
         {
           "status": 422,
@@ -26,6 +28,8 @@ class UsersController < ApplicationController
     )
 
     if user.save
+      invite.update_attribute(:invited_id, user.id)
+
       render json: user, meta: { jwt: Knock::AuthToken.new(payload: user.to_token_payload ).token }
     else
       respond_with_errors(user)
@@ -42,7 +46,7 @@ class UsersController < ApplicationController
 
   def block
     blocked = current_user.blocked
-  
+
     unless params[:user_id] == current_user.hashid
       blocked.push params[:user_id]
     end
