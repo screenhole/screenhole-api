@@ -10,6 +10,7 @@ class Memo < ApplicationRecord
     :generic,
     :voice,
     :sticker,
+    :chomment,
   ]
 
   serialize :meta, Hash
