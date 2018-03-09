@@ -1,4 +1,10 @@
 class ServicesController < ApplicationController
+  def buttcoin_market_cap
+    render json: {
+      market_cap: Buttcoin.market_cap
+    }
+  end
+
   def voice_memo
     # load by calling_code if it's present
     if params.has_key? :calling_code

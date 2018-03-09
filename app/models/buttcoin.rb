@@ -21,4 +21,8 @@ class Buttcoin < ApplicationRecord
   def channel_broadcast
     ActionCable.server.broadcast "buttcoins_messages", ActiveModelSerializers::SerializableResource.new(self).as_json
   end
+
+  def self.market_cap
+    Buttcoin.sum(:amount)
+  end
 end

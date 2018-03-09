@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'grabs#index'
 
+  get '/svc/buttcoin/market_cap' => 'services#buttcoin_market_cap'
+
   post '/svc/memo/voice' => 'services#voice_memo'
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
@@ -32,5 +34,6 @@ Rails.application.routes.draw do
     resources :grabs, only: [:index, :show]
   end
 
+  # for old clients
   post '/shots' => 'grabs#create'
 end
