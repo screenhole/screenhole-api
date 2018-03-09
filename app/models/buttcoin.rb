@@ -6,13 +6,16 @@ class Buttcoin < ApplicationRecord
   after_save :channel_broadcast
 
   AMOUNTS = {
-    create_grab: 11,
-    create_voice_memo: 9,
-    receive_voice_memo: 13,
-  }
+    create_grab: 500,
+    create_chomment: 10,
 
-  COSTS = {
-    generate_invite: -200,
+    create_voice_memo: 2_000,
+    receive_voice_memo: 2_000,
+
+    create_chomment_memo_per_char: -1,
+    receive_chomment_memo_per_char: 1,
+
+    generate_invite: -10_000,
   }
 
   def channel_broadcast

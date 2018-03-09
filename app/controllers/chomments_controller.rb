@@ -15,6 +15,7 @@ class ChommentsController < ApplicationController
 
     if chomment.update_attributes(item_params)
       chomment.notify_at_replied_users
+      current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_chomment], "Generated chomment #{chomment.hashid}")
       render json: chomment
     else
       respond_with_errors(chomment)
