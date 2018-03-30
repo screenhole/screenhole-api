@@ -1,1 +1,6 @@
-jacob = User.create(username: "jacob", password: "football", password_confirmation: "football")
+# frozen_string_literal: true
+
+User.create!(username: 'jacob',
+             email: 'jacob@helloworld.com',
+             password: 'football',
+             password_confirmation: 'football')
