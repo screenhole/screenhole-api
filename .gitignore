@@ -12,3 +12,5 @@
 !/tmp/.keep
 
 .byebug_history
+coverage/
+.DS_Store

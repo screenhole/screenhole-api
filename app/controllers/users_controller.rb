@@ -29,8 +29,9 @@ class UsersController < ApplicationController
 
     if user.save
       invite.update_attribute(:invited_id, user.id)
-
-      render json: user, meta: { jwt: Knock::AuthToken.new(payload: user.to_token_payload ).token }
+      jwt_token = Knock::AuthToken.new(payload: user.to_token_payload ).token
+      
+      render json: user, meta: { jwt: jwt_token }
     else
       respond_with_errors(user)
     end

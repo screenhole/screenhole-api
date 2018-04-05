@@ -4,8 +4,13 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
+one:
+  user: one
+  code: <%= rand(36**8).to_s(36).downcase %>
 # column: value
 #
-two: {}
+two_redeemed:
+  user: two
+  code: <%= rand(36**8).to_s(36).downcase %>
+  invited_id: 123456789
 # column: value
