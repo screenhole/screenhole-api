@@ -15,3 +15,10 @@ three_w_blocked:
   email: three@example.net
   password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
   blocked: ['12345', '67890', '13419']
+
+buttcoin_millionaire:
+  username: bawss
+  email: buttcoin@millionaire.me
+  password_digest: <%= BCrypt::Password.create('secret', cost: 4) %>
+  name: Bruce Wayne
+  bio: Software Engineer, EIT - I read your beautifully tracked emails using plain text - https://dailyvibes.ca  – http://elderoost.com  – http://t.me/getaclue

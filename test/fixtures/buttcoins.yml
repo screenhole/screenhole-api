@@ -2,10 +2,15 @@
 
 one:
   user: one
-  amount: 1
+  amount: 30
   note: MyString
 
 two:
   user: two
   amount: 1
   note: MyString
+
+millionaire:
+  amount: 1_000_000
+  user: buttcoin_millionaire
+  note: 'bawss'

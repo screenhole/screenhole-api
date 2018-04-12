@@ -2,10 +2,13 @@
 
 one:
   user: one
-  actor: one
-  cross_ref: one
-  cross_ref_type: Cross ref
-  meta: MyText
+  actor: buttcoin_millionaire
+  cross_ref: one (Memo)
+  cross_ref_type: Memo
+  meta: {
+    summary: 'wow this is awesome share thnx'
+  }
+  variant: :chomment
 
 two:
   user: two
