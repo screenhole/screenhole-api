@@ -8,4 +8,15 @@ class Note < ApplicationRecord
   serialize :meta, Hash
 
   validates_presence_of :variant, :user
+
+  after_save :channel_broadcast
+
+  def channel_broadcast
+    return unless can_broadcast?
+    ActionCable.server.broadcast 'notes_channel', as_json
+  end
+
+  def can_broadcast?
+    variant == 'chomment' || variant == 'at_reply'
+  end
 end
