@@ -40,6 +40,7 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return pending notifications count #any' do
     user = users(:one)
+    EXPECTED_NOTES_COUNT = user.notes.count
 
     token = Knock::AuthToken.new(payload: { sub: user.id }).token
 
@@ -52,11 +53,16 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     response = JSON.parse(@response.body)
 
     assert_response :success
-    assert_equal 1, response['pending']
+    assert_equal EXPECTED_NOTES_COUNT, response['pending']
   end
 
   test 'should return pending notifications #index' do
     user = users(:one)
+
+    COUNT_PER_PAGE = 25
+
+    user_notes_count = user.notes.count
+    total_pages = (user_notes_count / COUNT_PER_PAGE.to_f).ceil
 
     token = Knock::AuthToken.new(payload: { sub: user.id }).token
 
@@ -66,10 +72,45 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 
     get sup_url, headers: inline_headers
 
+    assert_response :success
+
     response_data = JSON.parse(@response.body)
     notes_data = response_data['notes']
+    meta_data = response_data['meta']
+
+    assert_equal COUNT_PER_PAGE, notes_data.count
+    assert_equal user_notes_count, meta_data['total_count']
+    assert_equal 1, meta_data['current_page']
+    assert_equal total_pages, meta_data['total_pages']
+  end
+
+  test 'should respond to pagination of notifications #index' do
+    user = users(:one)
+
+    EXPECTED_PAGE = 1
+    EXPECTED_TOTAL_PAGES = 1
+    COUNTS_PER_PAGE = 121
+
+    params = {
+      per_page: COUNTS_PER_PAGE
+    }
+
+    token = Knock::AuthToken.new(payload: { sub: user.id }).token
+
+    inline_headers = {
+      'Authorization': "Bearer #{token}"
+    }
+
+    get sup_url, params: params, headers: inline_headers
+
+    response_data = JSON.parse(@response.body)
+    notes_data = response_data['notes']
+    meta_data = response_data['meta']
 
     assert_response :success
-    assert_equal 1, notes_data.count
+
+    assert_equal COUNTS_PER_PAGE, notes_data.count
+    assert_equal EXPECTED_PAGE, meta_data['current_page']
+    assert_equal EXPECTED_TOTAL_PAGES, meta_data['total_pages']
   end
 end
