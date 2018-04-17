@@ -2,15 +2,31 @@
 
 one:
   user: one
-  amount: 30
-  note: MyString
+  amount: 1
+  note: "Testing Buttcoins"
 
 two:
   user: two
   amount: 1
-  note: MyString
+  note: "Testing Buttcoins"
 
-millionaire:
-  amount: 1_000_000
-  user: buttcoin_millionaire
-  note: 'bawss'
+buttcoin_invite:
+  user: one
+  amount: <%= Buttcoin::AMOUNTS[:generate_invite] %>
+  note: 'Generated Invite'
+
+<% (1..12).each do |i| %>
+buttcoin_0<%= i %>:
+  user: one
+  amount: <%= Buttcoin::AMOUNTS[:create_grab] %>
+  note: 'Created Grab'
+  created_at: <%= i.days.ago %>
+  updated_at: <%= i.days.ago %>
+
+buttcoin_00<%= i %>:
+  user: one
+  amount: <%= Buttcoin::AMOUNTS[:create_chomment] %>
+  note: 'Created Chomment'
+  created_at: <%= i.days.ago %>
+  updated_at: <%= i.days.ago %>
+<% end %>
