@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   post '/svc/memo/voice' => 'services#voice_memo'
 
+  get '/buttcoins', to: 'buttcoins#index'
+  get '/buttcoins/trends', to: 'buttcoins#trends'
+
   resources :grabs, only: [:index, :show, :create, :destroy] do
     post 'report' => 'grabs#report'
 
