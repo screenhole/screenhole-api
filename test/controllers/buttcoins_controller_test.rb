@@ -29,25 +29,20 @@ class ButtcoinsControllerTest < ActionDispatch::IntegrationTest
     response_data = JSON.parse(response.body)
 
     expected_spent = -10_000
-    expected_profit = -9998
+    expected_profit = -9999
 
-    assert_equal 2, response_data['earned']
+    assert_equal 1, response_data['earned']
     assert_equal expected_spent, response_data['spent']
     assert_equal expected_profit, response_data['profit']
   end
 
-  test 'responds with correct data for past 7 days trends #trends' do
+  test 'responds with correct data for past 12 days trends #trends' do
     get buttcoins_trends_url, headers: authenticated_header
 
     assert_response :success
 
     response_data = JSON.parse(response.body)
 
-    expected_spent = -10_000
-    expected_profit = -4388
-
-    assert_equal 5612, response_data['earned']
-    assert_equal expected_spent, response_data['spent']
-    assert_equal expected_profit, response_data['profit']
+    assert_equal 12, response_data.count
   end
 end
