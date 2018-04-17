@@ -76,5 +76,9 @@ class MemosControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+
+    result_data = JSON.parse(@response.body)
+
+    assert_equal grab.hashid, result_data['memo']['grab']['id']
   end
 end

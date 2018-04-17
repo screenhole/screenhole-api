@@ -10,6 +10,11 @@ two:
   amount: 1
   note: "Testing Buttcoins"
 
+millionaire:
+  user: buttcoin_millionaire
+  amount: 1_000_000
+  note: 'Testing Millionaire Status'
+
 buttcoin_invite:
   user: one
   amount: <%= Buttcoin::AMOUNTS[:generate_invite] %>
