@@ -80,7 +80,8 @@ class MemosController < ApplicationController
 
     # check balance
     cost = Buttcoin::AMOUNTS[:create_chomment_memo_per_char] * (memo.message || '').length
-    unless current_user.buttcoin_balance + cost > 0
+
+    unless (current_user.buttcoin_balance + cost).positive?
       return render json: {
         error: 'not enough buttcoin',
       }, status: :unprocessable_entity
@@ -89,7 +90,21 @@ class MemosController < ApplicationController
     if memo.save
       if memo.variant == 'chomment'
         current_user.buttcoin_transaction(cost, "Created chomment memo #{memo.hashid}")
-        grab.user.buttcoin_transaction(Buttcoin::AMOUNTS[:receive_chomment_memo_per_char] * memo.message.length, "Received chomment memo #{memo.hashid}")
+
+        buttcoin_earned = memo.message ? Buttcoin::AMOUNTS[:receive_chomment_memo_per_char] * memo.message.length : 0
+
+        grab.user.notes.create!(
+          variant: :chomment,
+          user: grab.user,
+          actor: current_user,
+          cross_ref: memo,
+          meta: { 
+            summary: memo.message,
+            buttcoin_earned: buttcoin_earned
+          }
+        )
+
+        grab.user.buttcoin_transaction(buttcoin_earned, "Received chomment memo #{memo.hashid}")
       end
 
       render json: memo

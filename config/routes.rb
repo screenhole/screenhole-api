@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: 'grabs#index'
 
+  get '/sup/any' => 'notes#any'
+  get '/sup' => 'notes#index'
+
   get '/svc/buttcoin/market_cap' => 'services#buttcoin_market_cap'
 
   post '/svc/memo/voice' => 'services#voice_memo'

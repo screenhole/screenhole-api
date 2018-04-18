@@ -1,0 +1,7 @@
+one:
+  image_path: '/fake/path.png'
+  user: buttcoin_millionaire
+
+two:
+  image_path: '/some/fake/path.png'
+  user: one

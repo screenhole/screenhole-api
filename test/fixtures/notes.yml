@@ -1,15 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+<% 1.upto(121) do |i| %>
+note_<%= i %>:
   user: one
-  actor: one
-  cross_ref: one
-  cross_ref_type: Cross ref
-  meta: MyText
+  actor: buttcoin_millionaire
+  cross_ref: one (Memo)
+  cross_ref_type: Memo
+  meta: {
+    summary: 'wow this is awesome share thnx'
+  }
+  variant: :chomment
+<% end %>
 
 two:
   user: two
   actor: two
-  cross_ref: two
-  cross_ref_type: Cross ref
-  meta: MyText
+  cross_ref: two (Memo)
+  cross_ref_type: Memo
+  meta: {
+    summary: 'hello world'
+  }
