@@ -99,6 +99,7 @@ class MemosController < ApplicationController
           actor: current_user,
           cross_ref: memo,
           meta: { 
+            grab_id: grab.hashid,
             summary: memo.message,
             buttcoin_earned: buttcoin_earned
           }
