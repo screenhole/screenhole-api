@@ -5,6 +5,8 @@ class Note < ApplicationRecord
   belongs_to :actor, class_name: "User"
   belongs_to :cross_ref, polymorphic: true
 
+  default_scope { order(created_at: :desc) }
+  
   serialize :meta, Hash
 
   validates_presence_of :variant, :user
