@@ -6,7 +6,7 @@ class Note < ApplicationRecord
   belongs_to :cross_ref, polymorphic: true
 
   default_scope { order(created_at: :desc) }
-  
+
   serialize :meta, Hash
 
   validates_presence_of :variant, :user
@@ -15,7 +15,11 @@ class Note < ApplicationRecord
 
   def channel_broadcast
     return unless can_broadcast?
-    ActionCable.server.broadcast 'notes_channel', as_json
+
+    serialized_data = ActiveModelSerializers::SerializableResource.new(self)
+    serialized_json_data = serialized_data.as_json
+
+    ActionCable.server.broadcast 'notes_channel', serialized_json_data
   end
 
   def can_broadcast?
