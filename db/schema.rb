@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180301201222) do
+ActiveRecord::Schema.define(version: 20180421163828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20180301201222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_notes_on_actor_id"
+    t.index ["created_at"], name: "index_notes_on_created_at"
     t.index ["cross_ref_type", "cross_ref_id"], name: "index_notes_on_cross_ref_type_and_cross_ref_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
     t.index ["variant"], name: "index_notes_on_variant"
@@ -96,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180301201222) do
     t.string "name"
     t.string "bio"
     t.text "blocked", default: [], array: true
+    t.datetime "sup_last_requested_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end

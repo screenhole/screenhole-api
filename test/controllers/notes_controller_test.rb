@@ -30,6 +30,8 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
       'Authorization': "Bearer #{token}"
     }
 
+    assert_nil user.sup_last_requested_at
+
     get sup_any_url, headers: inline_headers
 
     response = JSON.parse(@response.body)
@@ -40,6 +42,12 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should return pending notifications count #any' do
     user = users(:one)
+
+    # after we added sup_last_requested_at
+    # b/c our notifications were added within 1 days
+    user.sup_last_requested_at = 1.days.ago
+    user.save
+
     EXPECTED_NOTES_COUNT = user.notes.count
 
     token = Knock::AuthToken.new(payload: { sub: user.id }).token
@@ -70,6 +78,8 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
       'Authorization': "Bearer #{token}"
     }
 
+    assert_nil user.sup_last_requested_at
+
     get sup_url, headers: inline_headers
 
     assert_response :success
@@ -82,6 +92,9 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     assert_equal user_notes_count, meta_data['total_count']
     assert_equal 1, meta_data['current_page']
     assert_equal total_pages, meta_data['total_pages']
+
+    user.reload
+    assert_not_nil user.sup_last_requested_at
   end
 
   test 'should respond to pagination of notifications #index' do
@@ -101,6 +114,8 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
       'Authorization': "Bearer #{token}"
     }
 
+    assert_nil user.sup_last_requested_at
+
     get sup_url, params: params, headers: inline_headers
 
     response_data = JSON.parse(@response.body)
@@ -112,5 +127,8 @@ class NotesControllerTest < ActionDispatch::IntegrationTest
     assert_equal COUNTS_PER_PAGE, notes_data.count
     assert_equal EXPECTED_PAGE, meta_data['current_page']
     assert_equal EXPECTED_TOTAL_PAGES, meta_data['total_pages']
+
+    user.reload
+    assert_not_nil user.sup_last_requested_at
   end
 end
