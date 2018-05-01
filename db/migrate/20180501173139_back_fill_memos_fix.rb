@@ -24,8 +24,8 @@ class BackFillMemosFix < ActiveRecord::Migration[5.1]
           summary: memo.message,
           buttcoin_earned: buttcoin_earned
         },
-        created_at: grab.created_at,
-        updated_at: grab.created_at
+        created_at: memo.created_at,
+        updated_at: memo.created_at
       )
     end
 
