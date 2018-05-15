@@ -14,7 +14,7 @@ class NotesController < ApplicationController
     page = params[:page] || 1
     per_page = params[:per_page] || 25
 
-    notes = current_user.notes.page(page).per(per_page)
+    notes = Note.includes(:user, :actor, :cross_ref).where(user: current_user).page(page).per(per_page)
 
     render json: notes, meta: pagination_dict(notes)
   end

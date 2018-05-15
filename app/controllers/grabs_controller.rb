@@ -15,7 +15,7 @@ class GrabsController < ApplicationController
         blocked_users.map! { |x| User.decode_id x }
       end
 
-      grabs = Grab.where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
+      grabs = Grab.includes(:user, :memos).where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
     end
 
     grabs.reverse_order!
