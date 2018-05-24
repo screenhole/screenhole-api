@@ -30,6 +30,13 @@ class GrabsController < ApplicationController
   def create
     grab = current_user.grabs.new
 
+    description_limit = 500
+
+    if params[:description].present?
+      description = params[:description][0..description_limit]
+      grab.description = description.gsub(/[^0-9A-z@#.\-]/, '_')
+    end
+
     begin
       obj = AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
       obj.upload_file(params[:image].tempfile, acl: 'public-read')
@@ -78,6 +85,6 @@ class GrabsController < ApplicationController
   end
 
   def item_params
-    params.require(:grab).permit(:image)
+    params.require(:grab).permit(:image, :description)
   end
 end
