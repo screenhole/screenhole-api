@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotesController < ApplicationController
   before_action :authenticate_user
 
@@ -9,6 +11,8 @@ class NotesController < ApplicationController
   end
 
   def index
+    return unless current_user
+
     current_user.touch(:sup_last_requested_at)
 
     page = params[:page] || 1
