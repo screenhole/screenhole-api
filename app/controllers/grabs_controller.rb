@@ -34,7 +34,8 @@ class GrabsController < ApplicationController
 
     if params[:description].present?
       description = params[:description][0..description_limit]
-      grab.description = description.gsub(/[^0-9A-z@#.\-]/, '_')
+      sanitized = description.gsub(/[^0-9A-z@#.\-]/, 'SHReplaceMe')
+      grab.description = sanitized.gsub(/SHReplaceMe/, ' ').strip
     end
 
     begin
