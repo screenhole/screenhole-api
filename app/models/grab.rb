@@ -1,7 +1,7 @@
 class Grab < ApplicationRecord
   include Hashid::Rails
-  
-  belongs_to :user
+
+  belongs_to :user, counter_cache: true
 
   has_many :memos, dependent: :destroy
 

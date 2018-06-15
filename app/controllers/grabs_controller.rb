@@ -15,7 +15,7 @@ class GrabsController < ApplicationController
         blocked_users.map! { |x| User.decode_id x }
       end
 
-      grabs = Grab.where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
+      grabs = Grab.includes(:user, :memos).where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
     end
 
     grabs.reverse_order!
@@ -29,6 +29,13 @@ class GrabsController < ApplicationController
 
   def create
     grab = current_user.grabs.new
+
+    description_limit = 500
+
+    if params[:description].present?
+      description = params[:description][0..description_limit]
+      grab.description = description.gsub(/[^0-9A-z@#.\-]/, '_')
+    end
 
     begin
       obj = AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
@@ -78,6 +85,6 @@ class GrabsController < ApplicationController
   end
 
   def item_params
-    params.require(:grab).permit(:image)
+    params.require(:grab).permit(:image, :description)
   end
 end
