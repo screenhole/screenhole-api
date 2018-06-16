@@ -9,6 +9,27 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test 'should return a list of users from #index' do
+    get('/users', headers: authenticated_header)
+
+    assert_response(:success)
+
+    users = JSON.parse(@response.body).try(:[], 'users')
+
+    assert_not_nil(users)
+    assert_kind_of(Array, users)
+
+    first_user = users.first
+
+    assert_not_nil(first_user)
+    assert_equal('getaclue_1', users(:one).username)
+  end
+
+  test 'should not allow access to list of users if non-authenticated' do
+    get('/users')
+    assert_response(401)
+  end
+
   test 'should get #show' do
     user = users(:one).username
 
@@ -53,14 +74,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update user #update' do
-    params = { 
-      auth: { 
-        username: 'getaclue', 
-        email: 'info@getaclue.me', 
-        name: 'Kluew Alex', 
-        bio: 'Hello World', 
-        password: 'newp4ssw0rd', 
-        password_confirmation: 'newp4ssw0rd' 
+    params = {
+      auth: {
+        username: 'getaclue',
+        email: 'info@getaclue.me',
+        name: 'Kluew Alex',
+        bio: 'Hello World',
+        password: 'newp4ssw0rd',
+        password_confirmation: 'newp4ssw0rd'
       }
     }
 

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:show, :create] do
+  resources :users, only: [:index, :show, :create] do
     post 'block' => 'users#block'
     post 'unblock' => 'users#unblock'
 

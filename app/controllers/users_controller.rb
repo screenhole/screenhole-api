@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user, except: [:show, :create]
 
+  def index
+    render json: User.visible_in_directory
+  end
+
   def show
     username = params[:id].strip.downcase if params[:id]
     render json: User.find_by(username: username), include: ['grabs.*', 'notes.*']
@@ -31,7 +35,7 @@ class UsersController < ApplicationController
     if user.save
       invite.update_attribute(:invited_id, user.id)
       jwt_token = Knock::AuthToken.new(payload: user.to_token_payload ).token
-      
+
       render json: user, meta: { jwt: jwt_token }
     else
       respond_with_errors(user)
