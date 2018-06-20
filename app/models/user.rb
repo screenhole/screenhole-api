@@ -17,6 +17,8 @@ class User < ApplicationRecord
   has_many :notes
   has_many :invites
 
+  before_validation :normalize_username
+
   def buttcoin_transaction(amount, note=nil)
     Buttcoin.create(user: self, amount: amount, note: note)
   end
@@ -40,5 +42,10 @@ class User < ApplicationRecord
   def self.from_token_request(request)
     username = request.params["auth"] && request.params["auth"]["username"]
     self.find_by(username: username)
+  end
+
+  private
+  def normalize_username
+    self.username = username.strip.downcase if username
   end
 end

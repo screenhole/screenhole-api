@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user, except: [:show, :create]
 
   def show
-    render json: User.find_by(username: params[:id]), include: ['grabs.*', 'notes.*']
+    username = params[:id].strip.downcase if params[:id]
+    render json: User.find_by(username: username), include: ['grabs.*', 'notes.*']
   end
 
   def create

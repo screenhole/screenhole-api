@@ -23,6 +23,29 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'Software Engineer, EIT - I read your beautifully tracked emails using plain text - https://dailyvibes.ca  – http://elderoost.com  – http://t.me/getaclue', user_data['bio']
   end
 
+  test 'should ignore username case sensitivity in #show' do
+    get "/users/getaclue_1"
+
+    result_data_1 = JSON.parse(@response.body)
+    user_data_1 = result_data_1['user']
+
+    assert_equal 'getaclue_1', user_data_1['username']
+
+    get "/users/Getaclue_1"
+
+    result_data_2 = JSON.parse(@response.body)
+    user_data_2 = result_data_2['user']
+
+    assert_equal 'getaclue_1', user_data_2['username']
+
+    get "/users/GeTaClUe_1"
+
+    result_data_3 = JSON.parse(@response.body)
+    user_data_3 = result_data_3['user']
+
+    assert_equal 'getaclue_1', user_data_3['username']
+  end
+
   test 'should respond not authorized without auth header #update' do
     post current_users_url
 
