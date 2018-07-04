@@ -36,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def self.from_token_payload(payload)
-    if payload["sub"]
+    if payload && payload["sub"]
       self.find payload["sub"]
     else
       begin
