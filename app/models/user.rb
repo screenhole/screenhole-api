@@ -36,7 +36,21 @@ class User < ApplicationRecord
   end
 
   def self.from_token_payload(payload)
-    self.find payload["sub"]
+    if payload["sub"]
+      self.find payload["sub"]
+    else
+      begin
+        _decoded_token = Base64.decode64(payload)
+        _token = Knock::AuthToken.new(token: _decoded_token)
+        if _token.payload && _token.payload["sub"]
+          self.find _token.payload["sub"]
+        else
+          fail 'Missing sub payload'
+        end
+      rescue
+        return nil
+      end
+    end
   end
 
   def self.from_token_request(request)
