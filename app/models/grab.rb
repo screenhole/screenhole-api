@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
+# :nodoc:
 class Grab < ApplicationRecord
   include Hashid::Rails
+  enum gtype: %i[image recording]
 
   belongs_to :user, counter_cache: true
 

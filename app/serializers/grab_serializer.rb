@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# :nodoc:
 class GrabSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
 
-  attributes :created_at, :image_public_url, :description
+  attributes :created_at, :image_public_url, :description, :gtype
 
   belongs_to :user
 
