@@ -3,7 +3,7 @@
 # :nodoc:
 class Grab < ApplicationRecord
   include Hashid::Rails
-  enum gtype: %i[image recording]
+  enum media_type: %i[image recording]
 
   belongs_to :user, counter_cache: true
 

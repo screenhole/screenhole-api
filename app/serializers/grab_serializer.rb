@@ -4,7 +4,7 @@
 class GrabSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
 
-  attributes :created_at, :image_public_url, :description, :gtype
+  attributes :created_at, :image_public_url, :description, :media_type
 
   belongs_to :user
 

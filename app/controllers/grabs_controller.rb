@@ -40,7 +40,7 @@ class GrabsController < ApplicationController
 
     begin
       obj = if params[:type].present? && params[:type].include?('recording')
-              grab.gtype = :recording
+              grab.media_type = :recording
               AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.mp4")
             else
               AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
