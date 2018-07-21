@@ -39,12 +39,18 @@ class GrabsController < ApplicationController
     end
 
     begin
-      obj = AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
-      obj.upload_file(params[:image].tempfile, acl: 'public-read')
+      obj = if params[:type].present? && params[:type].include?('recording')
+              grab.media_type = :recording
+              AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.mp4")
+            else
+              AWS_S3_BUCKET.object("#{current_user.hashid}/#{Time.now.to_i}.png")
+            end
 
+      obj.upload_file(params[:image].tempfile, acl: 'public-read')
       grab.image_path = obj.key
-    rescue Exception => e
-      logger.debug "missing params[:image].tempfile probably"
+    rescue StandardError => e
+      logger.debug 'missing params[:image].tempfile probably'
+      logger.debug "uncaught #{e} exception while uploading to S3: #{e.message}"
     end
 
     if grab.save
@@ -86,6 +92,6 @@ class GrabsController < ApplicationController
   end
 
   def item_params
-    params.require(:grab).permit(:image, :description)
+    params.require(:grab).permit(:image, :description, :type)
   end
 end
