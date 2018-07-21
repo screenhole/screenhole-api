@@ -18,11 +18,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_nil(users)
     assert_kind_of(Array, users)
-
-    first_user = users.first
-
-    assert_not_nil(first_user)
-    assert_equal('getaclue_1', users(:one).username)
   end
 
   test 'should not allow access to list of users if non-authenticated' do
