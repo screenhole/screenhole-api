@@ -19,6 +19,8 @@ class User < ApplicationRecord
 
   before_validation :normalize_username
 
+  scope :visible_in_directory, -> { all }
+
   def buttcoin_transaction(amount, note=nil)
     Buttcoin.create(user: self, amount: amount, note: note)
   end
