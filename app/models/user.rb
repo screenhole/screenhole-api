@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   before_validation :normalize_username
 
-  scope :visible_in_directory, -> { all }
+  scope :visible_in_directory, -> { left_joins(:grabs).group(:id).order('COUNT(grabs.id) DESC') }
 
   def buttcoin_transaction(amount, note=nil)
     Buttcoin.create(user: self, amount: amount, note: note)
