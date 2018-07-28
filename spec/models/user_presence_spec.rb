@@ -21,21 +21,21 @@ describe UserPresence do
     end
   end
 
-  describe 'present!' do
+  describe '#present!' do
     it 'adds the user ID to a redis set' do
       expect(redis_client).to receive(:sadd).with(anything, user)
       subject.present!
     end
   end
 
-  describe 'gone!' do
+  describe '#gone!' do
     it 'removes the user ID from a redis set' do
       expect(redis_client).to receive(:srem).with(anything, user)
       subject.gone!
     end
   end
 
-  describe 'present?' do
+  describe '#present?' do
     it 'determines if the user ID is in the redis set' do
       aggregate_failures do
         expect(redis_client).to receive(:sismember).with(anything, user).and_return(true)
