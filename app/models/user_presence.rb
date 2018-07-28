@@ -2,7 +2,7 @@ class UserPresence
   def initialize(user_or_user_id, redis_client = Redis.current)
     @redis_client = redis_client
 
-    if user_or_user_id.respond_to(:id)
+    if user_or_user_id.respond_to?(:id)
       @user_id = user_or_user_id.id
       return
     end
