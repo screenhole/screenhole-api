@@ -26,6 +26,14 @@ class User < ApplicationRecord
     order('COUNT(grabs.id) DESC')
   }
 
+  delegate :present?, to: :presence
+  delegate :present!, to: :presence
+  delegate :gone!, to: :presence
+
+  def presence
+    UserPresence.new(self)
+  end
+
   def buttcoin_transaction(amount, note=nil)
     Buttcoin.create(user: self, amount: amount, note: note)
   end
