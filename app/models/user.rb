@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  DEFAULT_COUNTRY_EMOJI = '🏁'.freeze
+
   include Hashid::Rails
 
   validates_uniqueness_of :username, case_sensitive: false, allow_blank: false
@@ -9,6 +11,8 @@ class User < ApplicationRecord
   has_secure_password
   validates_length_of :password, minimum: 6, if: :password_digest_changed?
   validates_presence_of :password_confirmation, if: :password_digest_changed?
+
+  validates_inclusion_of :country_code, allow_blank: true, in: ISO3166::Country.codes
 
   has_many :grabs, dependent: :destroy
   has_many :chomments, dependent: :destroy
@@ -40,6 +44,10 @@ class User < ApplicationRecord
 
   def to_token_payload
     { sub: hashid }
+  end
+
+  def country_emoji
+    ISO3166::Country[country_code].try(:emoji_flag) || DEFAULT_COUNTRY_EMOJI
   end
 
   def self.from_token_payload(payload)
