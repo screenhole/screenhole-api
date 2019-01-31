@@ -1,5 +1,6 @@
 class ChommentsChannel < ApplicationCable::Channel
   def subscribed
+    current_user.try(:presence).try(:appear!)
     stream_from "chomments_messages"
   end
 
@@ -8,5 +9,6 @@ class ChommentsChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
+    current_user.try(:presence).try(:disappear!)
   end
 end
