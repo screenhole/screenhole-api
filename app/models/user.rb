@@ -65,8 +65,16 @@ class User < ApplicationRecord
     self.find_by(username: username)
   end
 
+  def online?
+    presence.present?
+  end
+
   private
   def normalize_username
     self.username = username.strip.downcase if username
+  end
+
+  def presence
+    @presence ||= UserPresenceService.new(id: hashid)
   end
 end

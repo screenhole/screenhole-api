@@ -12,6 +12,8 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :roles
 
+  attribute :online?, key: :is_online
+
   def roles
     roles = []
 
