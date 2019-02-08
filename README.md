@@ -7,13 +7,14 @@
 ```
 \curl -L https://get.rvm.io | bash -s stable
 ```
+
 Check https://rvm.io/
 
 ### Install Ruby
 
 ```
-rvm install 2.3.2
-rvm use 2.3.2
+rvm install 2.6.1
+rvm use 2.6.1
 gem install bundler
 ```
 
@@ -28,6 +29,7 @@ rvm osx-ssl-certs update all
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
+
 Check http://brew.sh/
 
 ### Install Postgresql
@@ -55,6 +57,7 @@ brew install redis
 ```
 curl get.pow.cx | sh
 ```
+
 Check http://pow.cx/ if no workie.
 
 ### Install Heroku
@@ -62,6 +65,7 @@ Check http://pow.cx/ if no workie.
 ```
 brew install heroku/brew/heroku
 ```
+
 Check https://devcenter.heroku.com/articles/heroku-cli
 
 ### Install FakeS3
@@ -97,6 +101,7 @@ echo 5000 > ~/.pow/screenhole
 ```
 heroku local
 ```
+
 Go to [http://api.screenhole.dev:5000](http://api.screenhole.dev:5000).
 
 ### Run tests locally
@@ -123,12 +128,13 @@ rake db:seed
 
 ### Deploy to staging
 
-*Note:* Staging is automatically deployed with every push to `master`. You can still force a deploy by hand.
+_Note:_ Staging is automatically deployed with every push to `master`. You can still force a deploy by hand.
 
 ```
 git push staging master
 ```
-View at ___
+
+View at \_\_\_
 
 ### Deploy to production
 
