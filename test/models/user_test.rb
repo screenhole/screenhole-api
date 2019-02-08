@@ -58,6 +58,18 @@ class UserTest < ActiveSupport::TestCase
     assert_equal user.valid?, false
   end
 
+  test '#time_now returns nil when no country_code is set' do
+    user = users(:one)
+    assert_nil(user.time_now)
+  end
+
+  test '#time_now returns a time when a country_code is set' do
+    user = users(:one)
+    user.country_code = 'FI'
+
+    assert_match(/^\d{2}:\d{2}$/, user.time_now)
+  end
+
   test '#awards returns a non-empty array' do
     user = users(:one)
     assert(user.awards.count > 0)

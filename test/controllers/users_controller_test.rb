@@ -53,6 +53,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal '🇸🇪', result['country_emoji']
   end
 
+  test 'includes a time_now if supplied' do
+    user = users(:one)
+    user.country_code = 'SE'
+    user.save!
+
+    get "/users/#{user.username}"
+
+    result = JSON.parse(@response.body)['user']
+
+    assert_match(/^\d{2}:\d{2}$/, result['time_now'])
+  end
+
   test 'includes some awards' do
     user = users(:one)
     user.save!

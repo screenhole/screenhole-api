@@ -57,6 +57,16 @@ class User < ApplicationRecord
     ISO3166::Country[country_code].try(:emoji_flag) || DEFAULT_COUNTRY_EMOJI
   end
 
+  def time_now
+    ISO3166::Country[country_code]
+      .try(:timezones)
+      .try(:zone_info)
+      .try(:first)
+      .try(:timezone)
+      .try(:now)
+      .try(:strftime, '%H:%M')
+  end
+
   def awards
     POTENTIAL_AWARDS.map do |klass|
       award = klass.new(self)
