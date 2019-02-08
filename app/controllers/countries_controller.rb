@@ -9,7 +9,7 @@ class CountriesController < ApplicationController
           code: c.alpha2,
           emoji: c.emoji_flag
         }
-      end
+      end.sort_by { |c| c[:name] }
     }
   end
 end
