@@ -5,6 +5,7 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :country_code
   attribute :country_emoji
+  attribute :time_now
 
   attribute :email, if: :is_current_user?
 

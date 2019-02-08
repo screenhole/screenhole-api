@@ -187,6 +187,8 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2018.9)
+      tzinfo (>= 1.0.0)
     unicode_utils (1.4.0)
     uniform_notifier (1.11.0)
     web-console (3.5.1)
@@ -222,6 +224,8 @@ DEPENDENCIES
   skylight
   spring
   spring-watcher-listen (~> 2.0.0)
+  tzinfo
+  tzinfo-data
   web-console (>= 3.3.0)
 
 RUBY VERSION
