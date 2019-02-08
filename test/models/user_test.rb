@@ -57,4 +57,9 @@ class UserTest < ActiveSupport::TestCase
     user.country_code = 'big dick energy'
     assert_equal user.valid?, false
   end
+
+  test '#awards returns a non-empty array' do
+    user = users(:one)
+    assert(user.awards.count > 0)
+  end
 end

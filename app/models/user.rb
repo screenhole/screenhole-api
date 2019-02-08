@@ -1,4 +1,11 @@
 class User < ApplicationRecord
+  POTENTIAL_AWARDS = [
+    ChatterboxAward,
+    ContributorAward,
+    NewbieAward,
+    OversharerAward,
+    ZimmerFrameAward
+  ].freeze
   DEFAULT_COUNTRY_EMOJI = '🏁'.freeze
 
   include Hashid::Rails
@@ -48,6 +55,21 @@ class User < ApplicationRecord
 
   def country_emoji
     ISO3166::Country[country_code].try(:emoji_flag) || DEFAULT_COUNTRY_EMOJI
+  end
+
+  def awards
+    POTENTIAL_AWARDS.map do |klass|
+      award = klass.new(self)
+
+      next unless award.eligible?
+
+      {
+        id: award.id,
+        title: award.title,
+        description: award.description,
+        metadata: award.metadata
+      }
+    end.reject(&:nil?)
   end
 
   def self.from_token_payload(payload)

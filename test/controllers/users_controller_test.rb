@@ -53,6 +53,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal '🇸🇪', result['country_emoji']
   end
 
+  test 'includes some awards' do
+    user = users(:one)
+    user.save!
+
+    get "/users/#{user.username}"
+
+    result = JSON.parse(@response.body)['user']
+
+    assert(result['awards'].count > 0)
+  end
+
   test 'should ignore username case sensitivity in #show' do
     get "/users/getaclue_1"
 
