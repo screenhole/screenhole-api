@@ -38,4 +38,23 @@ class UserTest < ActiveSupport::TestCase
 
     assert_nil result
   end
+
+  test '#country_emoji returns a checkered flag if no country_code is set' do
+    user = users(:one)
+
+    assert_equal user.country_emoji, '🏁'
+  end
+
+  test '#country_emoji returns the relevant flag if a valid country_code is set' do
+    user = users(:one)
+    user.country_code = 'FI'
+
+    assert_equal user.country_emoji, '🇫🇮'
+  end
+
+  test 'country_code only accepts valid countries' do
+    user = users(:one)
+    user.country_code = 'big dick energy'
+    assert_equal user.valid?, false
+  end
 end
