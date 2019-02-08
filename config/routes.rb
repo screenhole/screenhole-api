@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     resources :grabs, only: [:index, :show]
   end
 
+  resources :countries, only: [:index]
+
   # for old clients
   post '/shots' => 'grabs#create'
 end
