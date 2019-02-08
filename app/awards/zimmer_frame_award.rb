@@ -22,6 +22,6 @@ class ZimmerFrameAward < BaseAward
   private
 
   def age_in_days
-    @age_in_days ||= (Date.now - user.created_at).to_i
+    @age_in_days ||= (DateTime.now.to_date - user.created_at.to_date).to_i
   end
 end
