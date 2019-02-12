@@ -1,10 +1,10 @@
 class User < ApplicationRecord
-  POTENTIAL_AWARDS = [
-    ChatterboxAward,
-    ContributorAward,
-    NewbieAward,
-    OversharerAward,
-    ZimmerFrameAward
+  POTENTIAL_BADGERS = [
+    ChatterboxBadger,
+    ContributorBadger,
+    NewbieBadger,
+    OversharerBadger,
+    ElderlyBadger
   ].freeze
   DEFAULT_COUNTRY_EMOJI = '🏁'.freeze
 
@@ -67,17 +67,17 @@ class User < ApplicationRecord
       .try(:strftime, '%H:%M')
   end
 
-  def awards
-    POTENTIAL_AWARDS.map do |klass|
-      award = klass.new(self)
+  def badgers
+    POTENTIAL_BADGERS.map do |klass|
+      badger = klass.new(self)
 
-      next unless award.eligible?
+      next unless badger.eligible?
 
       {
-        id: award.id,
-        title: award.title,
-        description: award.description,
-        metadata: award.metadata
+        id: badger.id,
+        title: badger.title,
+        description: badger.description,
+        metadata: badger.metadata
       }
     end.reject(&:nil?)
   end

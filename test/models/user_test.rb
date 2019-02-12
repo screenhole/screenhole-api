@@ -70,8 +70,8 @@ class UserTest < ActiveSupport::TestCase
     assert_match(/^\d{2}:\d{2}$/, user.time_now)
   end
 
-  test '#awards returns a non-empty array' do
+  test '#badgers returns a non-empty array' do
     user = users(:one)
-    assert(user.awards.count > 0)
+    assert(user.badgers.count > 0)
   end
 end

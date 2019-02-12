@@ -1,14 +1,14 @@
-class ZimmerFrameAward < BaseAward
+class NewbieBadger < BaseBadger
   def id
-    'zimmer_frame'
+    'newbie'
   end
 
   def title
-    'Zimmer Frame'
+    'Newbie'
   end
 
   def description
-    "Long-time Hole resident. Been here for #{age_in_days} days. Soon to be put down."
+    'New here! Welcome!'
   end
 
   def metadata
@@ -16,7 +16,7 @@ class ZimmerFrameAward < BaseAward
   end
 
   def eligible?
-    user.created_at < Date.new(2018, 07, 01)
+    age_in_days <= 7
   end
 
   private
