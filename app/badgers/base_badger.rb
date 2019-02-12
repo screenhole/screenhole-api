@@ -1,4 +1,4 @@
-class BaseAward
+class BaseBadger
   def initialize(user)
     @user = user
   end

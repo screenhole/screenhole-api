@@ -65,7 +65,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_match(/^\d{2}:\d{2}$/, result['time_now'])
   end
 
-  test 'includes some awards' do
+  test 'includes some badgers' do
     user = users(:one)
     user.save!
 
@@ -73,7 +73,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     result = JSON.parse(@response.body)['user']
 
-    assert(result['awards'].count > 0)
+    assert(result['badgers'].count > 0)
   end
 
   test 'should ignore username case sensitivity in #show' do

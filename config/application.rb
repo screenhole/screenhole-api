@@ -28,8 +28,8 @@ module ScreenholeApi
     config.autoload_paths += %W(#{config.root}/lib)
     config.eager_load_paths += %W(#{config.root}/lib)
 
-    config.autoload_paths += %W(#{config.root}/app/awards)
-    config.eager_load_paths += %W(#{config.root}/app/awards)
+    config.autoload_paths += %W(#{config.root}/app/badgers)
+    config.eager_load_paths += %W(#{config.root}/app/badgers)
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.

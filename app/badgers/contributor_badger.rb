@@ -1,4 +1,4 @@
-class ContributorAward < BaseAward
+class ContributorBadger < BaseBadger
   LEGENDS = [
     'pasquale',
     'jacob',

@@ -16,7 +16,7 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :roles
 
-  attribute :awards
+  attribute :badgers
 
   def roles
     roles = []

@@ -1,4 +1,4 @@
-class ChatterboxAward < BaseAward
+class ChatterboxBadger < BaseBadger
   def id
     'chatterbox'
   end
