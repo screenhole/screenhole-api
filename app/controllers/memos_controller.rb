@@ -108,6 +108,8 @@ class MemosController < ApplicationController
         grab.user.buttcoin_transaction(buttcoin_earned, "Received chomment memo #{memo.hashid}")
       end
 
+      Rails.cache.delete_matched('grabs_feed*')
+
       render json: memo
     else
       respond_with_errors(memo)
