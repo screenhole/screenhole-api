@@ -77,6 +77,7 @@ GEM
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
+    get_process_mem (0.2.3)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashid-rails (1.1.0)
@@ -126,6 +127,9 @@ GEM
       mini_portile2 (~> 2.3.0)
     pg (0.21.0)
     puma (3.12.0)
+    puma_worker_killer (0.1.0)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     rack (2.0.3)
     rack-cors (1.0.1)
     rack-test (0.7.0)
@@ -216,6 +220,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
   puma (~> 3.7)
+  puma_worker_killer
   rack-cors
   rails (~> 5.1.4)
   redis
