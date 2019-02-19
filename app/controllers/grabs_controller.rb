@@ -7,6 +7,12 @@ class GrabsController < ApplicationController
     page = params[:page]
     per_page = 25
 
+    if params[:user_id].present?
+      grabs = User.find(params[:user_id]).grabs.page(page).per(per_page)
+      render json: grabs, meta: pagination_dict(grabs)
+      return
+    end
+
     grabs_json = Rails.cache.fetch("#{GRABS_FEED_CACHE_KEY}_page_#{page}", expires_in: 1.minute) do
       grabs = Grab.includes(:user, :memos).page(page).per(per_page).reverse_order
 
