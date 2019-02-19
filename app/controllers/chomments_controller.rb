@@ -1,13 +1,22 @@
 class ChommentsController < ApplicationController
+  CHOMMENTS_CACHE_KEY = 'chomments_json'.freeze
+
   before_action :authenticate_user, except: [:index]
 
   def index
     page = params[:page]
-    per_page = params[:per_page] || 100
+    per_page = 50
 
-    chomments = Chomment.includes(:user, :cross_ref).order("created_at desc").page(page).per(per_page)
+    chomments_json = Rails.cache.fetch(CHOMMENTS_CACHE_KEY, expires_in: 5.minutes) do
+      chomments = Chomment.includes(:user, :cross_ref).order("created_at desc").page(page).per(per_page)
 
-    render json: chomments, meta: pagination_dict(chomments)
+      render_to_string(
+        json: chomments,
+        meta: pagination_dict(chomments)
+      )
+    end
+
+    render json: chomments_json
   end
 
   def create
@@ -16,6 +25,7 @@ class ChommentsController < ApplicationController
     if chomment.update_attributes(item_params)
       chomment.notify_at_replied_users
       current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_chomment], "Generated chomment #{chomment.hashid}")
+      Rails.cache.delete(CHOMMENTS_CACHE_KEY)
       render json: chomment
     else
       respond_with_errors(chomment)
