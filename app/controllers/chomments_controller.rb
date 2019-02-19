@@ -7,7 +7,7 @@ class ChommentsController < ApplicationController
     page = params[:page]
     per_page = 50
 
-    chomments_json = Rails.cache.fetch(CHOMMENTS_CACHE_KEY, expires_in: 5.minutes) do
+    chomments_json = Rails.cache.fetch(cache_key_for_page(page), expires_in: 5.minutes) do
       chomments = Chomment.includes(:user, :cross_ref).order("created_at desc").page(page).per(per_page)
 
       render_to_string(
@@ -25,7 +25,7 @@ class ChommentsController < ApplicationController
     if chomment.update_attributes(item_params)
       chomment.notify_at_replied_users
       current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_chomment], "Generated chomment #{chomment.hashid}")
-      Rails.cache.delete(CHOMMENTS_CACHE_KEY)
+      Rails.cache.delete_matched("#{CHOMMENTS_CACHE_KEY}*")
       render json: chomment
     else
       respond_with_errors(chomment)
@@ -34,5 +34,11 @@ class ChommentsController < ApplicationController
 
   def item_params
     params.require(:chomment).permit(:message)
+  end
+
+  private
+
+  def cache_key_for_page(page)
+    "#{CHOMMENTS_CACHE_KEY}_page_#{page}"
   end
 end
