@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     username = params[:id].strip.downcase if params[:id]
-    render json: User.find_by(username: username), include: ['grabs.*', 'notes.*']
+    render json: User.find_by(username: username), include: ['grabs.*']
   end
 
   def create
