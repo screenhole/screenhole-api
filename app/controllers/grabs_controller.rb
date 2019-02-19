@@ -68,6 +68,7 @@ class GrabsController < ApplicationController
         detail: "Could not find grab"
       }
     elsif grab.destroy
+      Rails.cache.delete_matched("#{GRABS_FEED_CACHE_KEY}*")
       # TODO: send delete over ActionCable
       render json: {
         status: 200,
