@@ -37,6 +37,10 @@ preload_app!
 # are forked to prevent connection leakage.
 #
 before_fork do
+  require 'puma_worker_killer'
+
+  PumaWorkerKiller.enable_rolling_restart
+
   ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
 end
 
