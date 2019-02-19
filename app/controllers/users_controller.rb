@@ -2,7 +2,11 @@ class UsersController < ApplicationController
   before_action :authenticate_user, except: [:show, :create]
 
   def index
-    render json: User.visible_in_directory
+    cached_users = Rails.cache.fetch('peeps', expires_in: 5.minutes) do
+      render_to_string(json: User.visible_in_directory)
+    end
+
+    render json: cached_users
   end
 
   def show
