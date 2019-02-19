@@ -8,7 +8,7 @@ class GrabsController < ApplicationController
     per_page = 25
 
     if params[:user_id].present?
-      grabs = User.find(params[:user_id]).grabs.page(page).per(per_page)
+      grabs = User.find(params[:user_id]).grabs.page(page).per(per_page).reverse_order
       render json: grabs, meta: pagination_dict(grabs)
       return
     end
