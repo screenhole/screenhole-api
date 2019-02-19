@@ -1,26 +1,22 @@
 class GrabsController < ApplicationController
+  GRABS_FEED_CACHE_KEY = 'grabs_feed'.freeze
+
   before_action :authenticate_user, except: [:index, :show]
 
   def index
     page = params[:page]
-    per_page = params[:per_page] || 25
+    per_page = 25
 
-    if params[:user_id].present?
-      grabs = User.find(params[:user_id]).grabs.page(page).per(per_page)
-    else
-      blocked_users = []
+    grabs_json = Rails.cache.fetch("#{GRABS_FEED_CACHE_KEY}_page_#{page}", expires_in: 1.minute) do
+      grabs = Grab.includes(:user, :memos).page(page).per(per_page).reverse_order
 
-      if current_user
-        blocked_users = current_user.blocked
-        blocked_users.map! { |x| User.decode_id x }
-      end
-
-      grabs = Grab.includes(:user, :memos).where(Grab.arel_table[:user_id].not_in blocked_users).page(page).per(per_page)
+      render_to_string(
+        json: grabs,
+        meta: pagination_dict(grabs)
+      )
     end
 
-    grabs.reverse_order!
-
-    render json: grabs, meta: pagination_dict(grabs)
+    render json: grabs_json
   end
 
   def show
@@ -56,6 +52,7 @@ class GrabsController < ApplicationController
     if grab.save
       ActionCable.server.broadcast "grabs_messages", ActiveModelSerializers::SerializableResource.new(grab).as_json
       current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_grab], "Created Grab #{grab.hashid}")
+      Rails.cache.delete_matched("#{GRABS_FEED_CACHE_KEY}*")
       render json: grab
     else
       respond_with_errors(grab)
@@ -93,5 +90,19 @@ class GrabsController < ApplicationController
 
   def item_params
     params.require(:grab).permit(:image, :description, :type)
+  end
+
+  private
+
+  def blockees
+    return @blockees if @blockees
+
+    @blockees = []
+
+    if current_user
+      @blockees = current_user.blocked.map { |id| User.decode_id(id) }
+    end
+
+    @blockees
   end
 end
