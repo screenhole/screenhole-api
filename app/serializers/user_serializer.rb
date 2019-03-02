@@ -16,7 +16,7 @@ class UserSerializer < ActiveModel::Serializer
   attribute :badges
 
   def roles
-    [].tap |r| do
+    [].tap do |r|
       r << 'contributor' if object.is_contributor?
       r << 'staff' if object.is_staff?
     end
