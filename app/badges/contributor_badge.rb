@@ -8,6 +8,6 @@ class ContributorBadge < BaseBadge
   end
 
   def eligible?
-    user.is_contributor? || user.is_staff?
+    user.is_contributor?
   end
 end

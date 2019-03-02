@@ -23,7 +23,8 @@ class User < ApplicationRecord
     ManyChommentsBadge,
     ManyGrabsBadge,
     NewUserBadge,
-    NiceBadge
+    NiceBadge,
+    StaffBadge
   ].freeze
 
   DEFAULT_COUNTRY_EMOJI = '🏁'.freeze
