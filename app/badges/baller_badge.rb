@@ -7,8 +7,6 @@ class BallerBadge < BaseBadge
 
   def metadata
     {
-      user_gain: user_gain,
-      global_gain: global_gain,
       user_gain_relative_to_global_gain: user_gain_relative_to_global_gain
     }
   end
