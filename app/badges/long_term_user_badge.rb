@@ -1,14 +1,6 @@
-class NewbieBadge < BaseBadge
+class LongTermUserBadge < BaseBadge
   def id
-    'newbie'
-  end
-
-  def title
-    'Newbie'
-  end
-
-  def description
-    'New here! Welcome!'
+    'long_term_user'
   end
 
   def metadata
@@ -16,7 +8,7 @@ class NewbieBadge < BaseBadge
   end
 
   def eligible?
-    age_in_days <= 7
+    user.created_at < 420.days.ago
   end
 
   private

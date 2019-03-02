@@ -12,14 +12,6 @@ class ContributorBadge < BaseBadge
     'contributor'
   end
 
-  def title
-    'Contributor'
-  end
-
-  def description
-    'Helped make this thing for you.'
-  end
-
   def metadata
     {}
   end

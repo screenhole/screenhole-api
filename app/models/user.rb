@@ -17,11 +17,11 @@ class User < ApplicationRecord
   ).freeze
 
   POTENTIAL_BADGES = [
-    ChatterboxBadge,
     ContributorBadge,
-    NewbieBadge,
-    OversharerBadge,
-    ElderlyBadge
+    LongTermUserBadge,
+    ManyChommentsBadge,
+    ManyGrabsBadge,
+    NewUserBadge
   ].freeze
 
   DEFAULT_COUNTRY_EMOJI = '🏁'.freeze
@@ -95,8 +95,6 @@ class User < ApplicationRecord
 
       {
         id: badge.id,
-        title: badge.title,
-        description: badge.description,
         metadata: badge.metadata
       }
     end.reject(&:nil?)
