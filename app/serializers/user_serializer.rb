@@ -9,18 +9,9 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :email, if: :is_current_user?
 
-  attribute :roles
-
   attribute :stats
 
   attribute :badges
-
-  def roles
-    [].tap do |r|
-      r << 'contributor' if object.is_contributor?
-      r << 'staff' if object.is_staff?
-    end
-  end
 
   def stats
     stats = {
