@@ -32,11 +32,21 @@ class ChommentsController < ApplicationController
     end
   end
 
-  def item_params
-    params.require(:chomment).permit(:message)
+  def destroy
+    chomment = current_user.chomments.find_by_hashid!(params[:id])
+
+    chomment.destroy!
+
+    Rails.cache.delete_matched("#{CHOMMENTS_CACHE_KEY}*")
+
+    head :no_content
   end
 
   private
+
+  def item_params
+    params.require(:chomment).permit(:message)
+  end
 
   def cache_key_for_page(page)
     "#{CHOMMENTS_CACHE_KEY}_page_#{page}"
