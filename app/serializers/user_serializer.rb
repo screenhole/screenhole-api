@@ -9,18 +9,17 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :email, if: :is_current_user?
 
-  attribute :stats
-
   attribute :roles
+
+  attribute :stats
 
   attribute :badges
 
   def roles
-    roles = []
-
-    roles.push('admin') if [0,1,6].index(object.id) != nil
-
-    roles
+    [].tap |r| do
+      r << 'contributor' if object.is_contributor?
+      r << 'staff' if object.is_staff?
+    end
   end
 
   def stats

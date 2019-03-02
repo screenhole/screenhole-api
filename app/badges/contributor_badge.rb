@@ -1,13 +1,4 @@
 class ContributorBadge < BaseBadge
-  LEGENDS = [
-    'pasquale',
-    'jacob',
-    'aleks',
-    'wojtek',
-    'josh',
-    'boop'
-  ].freeze
-
   def id
     'contributor'
   end
@@ -17,6 +8,6 @@ class ContributorBadge < BaseBadge
   end
 
   def eligible?
-    LEGENDS.include?(user.username)
+    user.is_contributor? || user.is_staff?
   end
 end
