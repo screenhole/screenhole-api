@@ -8,7 +8,7 @@ class ManyGrabsBadge < BaseBadge
   end
 
   def eligible?
-    grab_count > 420
+    grab_count > 69
   end
 
   private
