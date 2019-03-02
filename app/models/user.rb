@@ -17,6 +17,7 @@ class User < ApplicationRecord
   ).freeze
 
   POTENTIAL_BADGES = [
+    BallerBadge,
     ContributorBadge,
     LongTermUserBadge,
     ManyChommentsBadge,
