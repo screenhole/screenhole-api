@@ -1,10 +1,11 @@
-class ContributorBadger < BaseBadger
+class ContributorBadge < BaseBadge
   LEGENDS = [
     'pasquale',
     'jacob',
     'aleks',
     'wojtek',
-    'josh'
+    'josh',
+    'boop'
   ].freeze
 
   def id
