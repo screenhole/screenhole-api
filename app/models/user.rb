@@ -1,4 +1,21 @@
 class User < ApplicationRecord
+  # The following usernames correspond to top-level routes in the frontend, meaning their
+  # user profile page will never be visible.
+  USERNAME_BLACKLIST = %w(
+    wtf
+    eula
+    privacy
+    apps
+    code
+    login
+    register
+    peeps
+    invite
+    logout
+    settings
+    sup
+  ).freeze
+
   POTENTIAL_BADGERS = [
     ChatterboxBadger,
     ContributorBadger,
@@ -6,12 +23,15 @@ class User < ApplicationRecord
     OversharerBadger,
     ElderlyBadger
   ].freeze
+
   DEFAULT_COUNTRY_EMOJI = '🏁'.freeze
 
   include Hashid::Rails
 
   validates_uniqueness_of :username, case_sensitive: false, allow_blank: false
   validates_uniqueness_of :email, case_sensitive: false, allow_blank: false
+
+  validates_exclusion_of :username, in: USERNAME_BLACKLIST
 
   validates_presence_of :username, :email
 
