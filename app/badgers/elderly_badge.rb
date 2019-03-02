@@ -1,4 +1,4 @@
-class ElderlyBadger < BaseBadger
+class ElderlyBadge < BaseBadge
   def id
     'elderly'
   end

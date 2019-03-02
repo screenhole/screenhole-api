@@ -1,4 +1,4 @@
-class OversharerBadger < BaseBadger
+class OversharerBadge < BaseBadge
   def id
     'oversharer'
   end
