@@ -39,37 +39,6 @@ class UserTest < ActiveSupport::TestCase
     assert_nil result
   end
 
-  test '#country_emoji returns a checkered flag if no country_code is set' do
-    user = users(:one)
-
-    assert_equal user.country_emoji, '🏁'
-  end
-
-  test '#country_emoji returns the relevant flag if a valid country_code is set' do
-    user = users(:one)
-    user.country_code = 'FI'
-
-    assert_equal user.country_emoji, '🇫🇮'
-  end
-
-  test 'country_code only accepts valid countries' do
-    user = users(:one)
-    user.country_code = 'big dick energy'
-    assert_equal user.valid?, false
-  end
-
-  test '#time_now returns nil when no country_code is set' do
-    user = users(:one)
-    assert_nil(user.time_now)
-  end
-
-  test '#time_now returns a time when a country_code is set' do
-    user = users(:one)
-    user.country_code = 'FI'
-
-    assert_match(/^\d{2}:\d{2}$/, user.time_now)
-  end
-
   test '#badges returns a non-empty array' do
     user = users(:one)
     assert(user.badges.count > 0)

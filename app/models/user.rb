@@ -42,8 +42,6 @@ class User < ApplicationRecord
   validates_length_of :password, minimum: 6, if: :password_digest_changed?
   validates_presence_of :password_confirmation, if: :password_digest_changed?
 
-  validates_inclusion_of :country_code, allow_blank: true, in: ISO3166::Country.codes
-
   has_many :grabs, dependent: :destroy
   has_many :chomments, dependent: :destroy
   has_many :memos, dependent: :destroy
@@ -78,16 +76,6 @@ class User < ApplicationRecord
 
   def country_emoji
     ISO3166::Country[country_code].try(:emoji_flag) || DEFAULT_COUNTRY_EMOJI
-  end
-
-  def time_now
-    ISO3166::Country[country_code]
-      .try(:timezones)
-      .try(:zone_info)
-      .try(:first)
-      .try(:timezone)
-      .try(:now)
-      .try(:strftime, '%H:%M')
   end
 
   def badges

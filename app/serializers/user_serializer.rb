@@ -3,8 +3,6 @@ class UserSerializer < ActiveModel::Serializer
 
   attributes :username, :created_at, :gravatar_hash, :name, :bio, :blocked
 
-  attribute :country_code
-  attribute :country_emoji
   attribute :time_now
 
   attribute :email, if: :is_current_user?
