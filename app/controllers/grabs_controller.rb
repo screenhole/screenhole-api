@@ -1,28 +1,14 @@
 class GrabsController < ApplicationController
-  GRABS_FEED_CACHE_KEY = 'grabs_feed'.freeze
-
   before_action :authenticate_user, except: [:index, :show]
 
   def index
-    page = params[:page]
-    per_page = 25
+    grabs = Grab.feed(
+      page: params[:page],
+      hole: hole,
+      user_id: params[:user_id]
+    )
 
-    if params[:user_id].present?
-      grabs = User.find(params[:user_id]).grabs.page(page).per(per_page).reverse_order
-      render json: grabs, meta: pagination_dict(grabs)
-      return
-    end
-
-    grabs_json = Rails.cache.fetch("#{GRABS_FEED_CACHE_KEY}_page_#{page}", expires_in: 1.minute) do
-      grabs = Grab.includes(:user, :memos).page(page).per(per_page).reverse_order
-
-      render_to_string(
-        json: grabs,
-        meta: pagination_dict(grabs)
-      )
-    end
-
-    render json: grabs_json
+    render json: grabs, meta: pagination_dict(grabs)
   end
 
   def show
@@ -58,7 +44,6 @@ class GrabsController < ApplicationController
     if grab.save
       ActionCable.server.broadcast "grabs_messages", ActiveModelSerializers::SerializableResource.new(grab).as_json
       current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_grab], "Created Grab #{grab.hashid}")
-      Rails.cache.delete_matched("#{GRABS_FEED_CACHE_KEY}*")
       render json: grab
     else
       respond_with_errors(grab)
@@ -74,7 +59,6 @@ class GrabsController < ApplicationController
         detail: "Could not find grab"
       }
     elsif grab.destroy
-      Rails.cache.delete_matched("#{GRABS_FEED_CACHE_KEY}*")
       # TODO: send delete over ActionCable
       render json: {
         status: 200,
@@ -100,6 +84,12 @@ class GrabsController < ApplicationController
   end
 
   private
+
+  def hole
+    return nil unless params[:hole].present?
+
+    @hole ||= Hole.find_by(subdomain: params[:hole])
+  end
 
   def blockees
     return @blockees if @blockees
