@@ -1,6 +1,8 @@
 class Hole < ApplicationRecord
   SUBDOMAIN_BLACKLIST = %w[www].freeze
 
+  has_many :grabs, dependent: :destroy
+
   validates(
     :name,
     presence: true

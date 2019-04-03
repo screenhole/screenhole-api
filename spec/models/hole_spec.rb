@@ -17,4 +17,8 @@ RSpec.describe Hole, type: :model do
       it { is_expected.to_not allow_value('With Non-Alpha Chars!').for(:subdomain) }
     end
   end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:grabs) }
+  end
 end

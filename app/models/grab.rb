@@ -5,6 +5,8 @@ class Grab < ApplicationRecord
   include Hashid::Rails
   enum media_type: %i[image recording]
 
+  belongs_to :hole, optional: true
+
   belongs_to :user, counter_cache: true
 
   has_many :memos, dependent: :destroy
