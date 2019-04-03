@@ -11,6 +11,11 @@ class HolesController < ApplicationController
     end
   end
 
+  def show
+    @hole = Hole.find_by!(subdomain: params[:id])
+    render json: @hole
+  end
+
   private
 
   def hole_params

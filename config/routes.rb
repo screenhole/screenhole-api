@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/buttcoins', to: 'buttcoins#index'
   get '/buttcoins/trends', to: 'buttcoins#trends'
 
-  resources :holes, only: %i[create]
+  resources :holes, only: %i[create show]
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
     post 'report' => 'grabs#report'
