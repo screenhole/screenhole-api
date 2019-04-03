@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_02_073427) do
+ActiveRecord::Schema.define(version: 2019_04_03_172746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,13 @@ ActiveRecord::Schema.define(version: 2019_03_02_073427) do
     t.text "description"
     t.integer "media_type", default: 0
     t.index ["user_id"], name: "index_grabs_on_user_id"
+  end
+
+  create_table "holes", force: :cascade do |t|
+    t.string "name"
+    t.string "subdomain"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "invites", force: :cascade do |t|
