@@ -1,5 +1,6 @@
 class HolesController < ApplicationController
   before_action :authenticate_user
+  before_action :authenticate_thinko_staff
 
   def create
     @hole = Hole.new(hole_params)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe HolesController, type: :controller do
-  let(:token) { Knock::AuthToken.new(payload: { sub: create(:user).id }).token }
+  let(:token) { Knock::AuthToken.new(payload: { sub: create(:user, is_staff: true).id }).token }
   before { request.headers.merge!('Authorization' => "Bearer #{token}") }
 
   describe '#create' do
