@@ -10,7 +10,7 @@ RSpec.describe Hole, type: :model do
 
     describe 'subdomain' do
       it { is_expected.to validate_presence_of(:subdomain) }
-      it { is_expected.to validate_exclusion_of(:subdomain).in_array(Hole::SUBDOMAIN_BLACKLIST) }
+      it { is_expected.to validate_exclusion_of(:subdomain).in_array(['www', '404']) }
       it { is_expected.to validate_length_of(:subdomain).is_at_least(3) }
       it { is_expected.to validate_length_of(:subdomain).is_at_most(30) }
       it { is_expected.to allow_value('abc-def-123').for(:subdomain) }
