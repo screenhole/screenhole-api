@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   namespace :admin do
-    resources :buttcoins
-    resources :chomments
-    resources :grabs
-    resources :users
-    resources :holes
-    resources :invites
-    resources :memos
-    resources :notes
+    resources :buttcoins, only: %i(index show new create edit update destroy)
+    resources :chomments, only: %i(index show new create edit update destroy)
+    resources :grabs, only: %i(index show new create edit update destroy)
+    resources :users, only: %i(index show new create edit update destroy)
+    resources :holes, only: %i(index show new create edit update destroy)
+    resources :invites, only: %i(index show new create edit update destroy)
+    resources :memos, only: %i(index show new create edit update destroy)
+    resources :notes, only: %i(index show new create edit update destroy)
 
     root to: 'users#index'
   end

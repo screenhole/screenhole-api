@@ -8,15 +8,16 @@ class NoteDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
+    id: Field::Number,
+    hashid: Field::String,
     user: Field::BelongsTo,
+    actor_id: Field::Number,
     actor: Field::BelongsTo.with_options(class_name: "User"),
     cross_ref: Field::Polymorphic,
-    id: Field::Number,
-    actor_id: Field::Number,
     variant: Field::String,
     meta: Field::Text,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,24 +26,25 @@ class NoteDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :hashid,
     :user,
     :actor,
     :cross_ref,
-    :id,
+    :variant
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
+    :id,
+    :hashid,
     :user,
     :actor,
     :cross_ref,
-    :id,
-    :actor_id,
     :variant,
     :meta,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -52,9 +54,8 @@ class NoteDashboard < Administrate::BaseDashboard
     :user,
     :actor,
     :cross_ref,
-    :actor_id,
     :variant,
-    :meta,
+    :meta
   ].freeze
 
   # Overwrite this method to customize how notes are displayed

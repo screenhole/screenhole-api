@@ -8,8 +8,9 @@ class InviteDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    user: Field::BelongsTo,
     id: Field::Number,
+    hashid: Field::String,
+    user: Field::BelongsTo,
     invited_id: Field::Number,
     code: Field::String,
     created_at: Field::DateTime,
@@ -22,30 +23,29 @@ class InviteDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :user,
-    :id,
-    :invited_id,
+    :hashid,
     :code,
+    :user,
+    :invited_id
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :user,
     :id,
-    :invited_id,
+    :hashid,
     :code,
+    :user,
+    :invited_id,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :user,
-    :invited_id,
-    :code,
+    :user
   ].freeze
 
   # Overwrite this method to customize how invites are displayed

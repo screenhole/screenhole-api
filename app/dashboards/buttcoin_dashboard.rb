@@ -8,8 +8,9 @@ class ButtcoinDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    user: Field::BelongsTo,
     id: Field::Number,
+    hashid: Field::String,
+    user: Field::BelongsTo,
     amount: Field::Number,
     note: Field::String,
     created_at: Field::DateTime,
@@ -22,21 +23,22 @@ class ButtcoinDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :hashid,
     :user,
-    :id,
     :amount,
-    :note,
+    :note
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :user,
     :id,
+    :hashid,
+    :user,
     :amount,
     :note,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -45,13 +47,6 @@ class ButtcoinDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :user,
     :amount,
-    :note,
+    :note
   ].freeze
-
-  # Overwrite this method to customize how buttcoins are displayed
-  # across all pages of the admin dashboard.
-  #
-  # def display_resource(buttcoin)
-  #   "Buttcoin ##{buttcoin.id}"
-  # end
 end

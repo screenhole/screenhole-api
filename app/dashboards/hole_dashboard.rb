@@ -8,7 +8,6 @@ class HoleDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    grabs: Field::HasMany,
     id: Field::Number,
     name: Field::String,
     subdomain: Field::String,
@@ -22,30 +21,26 @@ class HoleDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :grabs,
-    :id,
     :name,
-    :subdomain,
+    :subdomain
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :grabs,
     :id,
     :name,
     :subdomain,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :grabs,
     :name,
-    :subdomain,
+    :subdomain
   ].freeze
 
   # Overwrite this method to customize how holes are displayed

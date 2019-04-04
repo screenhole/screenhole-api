@@ -13,5 +13,6 @@ module Admin
     private
 
     attr_reader :current_admin
+    helper_method :current_admin
   end
 end
