@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :buttcoins
+    resources :chomments
+    resources :grabs
+    resources :users
+    resources :holes
+    resources :invites
+    resources :memos
+    resources :notes
+
+    root to: 'users#index'
+  end
+
   root to: 'grabs#index'
 
   get '/sup/any' => 'notes#any'
