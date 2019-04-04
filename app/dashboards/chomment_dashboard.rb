@@ -9,7 +9,7 @@ class ChommentDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    hashid: Field::String,
+    hashid: Field::String.with_options(searchable: false),
     user: Field::BelongsTo,
     cross_ref: Field::Polymorphic,
     variant: Field::String.with_options(searchable: false),

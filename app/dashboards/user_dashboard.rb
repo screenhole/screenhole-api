@@ -9,10 +9,10 @@ class UserDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    hashid: Field::String,
+    hashid: Field::String.with_options(searchable: false),
     username: Field::String,
-    password: Field::String,
-    password_confirmation: Field::String,
+    password: Field::String.with_options(searchable: false),
+    password_confirmation: Field::String.with_options(searchable: false),
     email: Field::String,
     name: Field::String,
     bio: Field::String,

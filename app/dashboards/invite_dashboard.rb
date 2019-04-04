@@ -9,7 +9,7 @@ class InviteDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    hashid: Field::String,
+    hashid: Field::String.with_options(searchable: false),
     user: Field::BelongsTo,
     invited_id: Field::Number,
     code: Field::String,

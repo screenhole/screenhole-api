@@ -9,7 +9,7 @@ class NoteDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    hashid: Field::String,
+    hashid: Field::String.with_options(searchable: false),
     user: Field::BelongsTo,
     actor_id: Field::Number,
     actor: Field::BelongsTo.with_options(class_name: "User"),
