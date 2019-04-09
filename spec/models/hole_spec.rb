@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Hole, type: :model do
-  describe 'validation' do
-    let(:hole) { build(:hole) }
+  subject { create(:hole) }
 
+  describe 'validation' do
     describe 'name' do
       it { is_expected.to validate_presence_of(:name) }
     end
@@ -20,5 +20,15 @@ RSpec.describe Hole, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:grabs) }
+    it { is_expected.to have_many(:hole_memberships) }
+    it { is_expected.to have_many(:users).through(:hole_memberships) }
+  end
+
+  describe '#owner' do
+    before { subject.hole_memberships.take.update(owner: true) }
+
+    it 'returns the owner of the hole' do
+      expect(subject.owner).to be_a(User)
+    end
   end
 end

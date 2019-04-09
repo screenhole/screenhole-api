@@ -1,5 +1,7 @@
 class Hole < ApplicationRecord
   has_many :grabs, dependent: :destroy
+  has_many :hole_memberships
+  has_many :users, through: :hole_memberships
 
   validates(
     :name,
@@ -13,4 +15,8 @@ class Hole < ApplicationRecord
     length: { minimum: 3, maximum: 30 },
     exclusion: Blacklist.words
   )
+
+  def owner
+    hole_memberships.where(owner: true).take.try(:user)
+  end
 end

@@ -5,6 +5,11 @@ class HolesController < ApplicationController
   def create
     @hole = Hole.new(hole_params)
 
+    @hole.hole_memberships << HoleMembership.new(
+      user: current_user,
+      owner: true
+    )
+
     if @hole.save
       render json: @hole
     else

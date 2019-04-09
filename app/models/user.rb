@@ -34,6 +34,9 @@ class User < ApplicationRecord
   has_many :notes
   has_many :invites
 
+  has_many :hole_memberships
+  has_many :holes, through: :hole_memberships
+
   before_validation :normalize_username
 
   scope :visible_in_directory, -> {

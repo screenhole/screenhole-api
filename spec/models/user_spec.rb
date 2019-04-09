@@ -3,6 +3,11 @@ require 'rails_helper'
 describe User, type: :model do
   subject { create(:user) }
 
+  describe 'associations' do
+    it { is_expected.to have_many(:hole_memberships) }
+    it { is_expected.to have_many(:holes).through(:hole_memberships) }
+  end
+
   describe '.from_token_payload' do
     let(:user) { create(:user) }
     subject { described_class.from_token_payload(token_payload) }

@@ -13,6 +13,8 @@ class UserSerializer < ActiveModel::Serializer
 
   attribute :badges
 
+  attribute :holes
+
   def stats
     stats = {
       grabs: object.grabs.size,
@@ -24,6 +26,10 @@ class UserSerializer < ActiveModel::Serializer
     end
 
     stats
+  end
+
+  def holes
+    object.holes.map { |h| HoleSerializer.new(h) }
   end
 
   def is_current_user?
