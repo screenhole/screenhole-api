@@ -11,6 +11,10 @@ class HoleDashboard < Administrate::BaseDashboard
     id: Field::Number,
     name: Field::String,
     subdomain: Field::String,
+    chomments_enabled: Field::Boolean,
+    chat_enabled: Field::Boolean,
+    web_upload_enabled: Field::Boolean,
+    private_grabs_enabled: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -32,7 +36,8 @@ class HoleDashboard < Administrate::BaseDashboard
     :name,
     :subdomain,
     :created_at,
-    :updated_at
+    :updated_at,
+    *Hole::RULES
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -40,7 +45,8 @@ class HoleDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :name,
-    :subdomain
+    :subdomain,
+    *Hole::RULES
   ].freeze
 
   # Overwrite this method to customize how holes are displayed

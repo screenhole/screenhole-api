@@ -17,7 +17,7 @@ describe HolesController, type: :controller do
       end
 
       it 'returns a JSON body' do
-        expect(JSON.parse(subject.body)).to eq('hole' => { 'name' => 'foo', 'subdomain' => 'foo' })
+        expect(JSON.parse(subject.body)['hole']).to include('name' => 'foo', 'subdomain' => 'foo')
       end
 
       it 'sets the current user as the hole owner' do
@@ -55,7 +55,34 @@ describe HolesController, type: :controller do
       end
 
       it 'returns a JSON body' do
-        expect(JSON.parse(subject.body)).to eq('hole' => { 'name' => hole.name, 'subdomain' => hole.subdomain })
+        expect(JSON.parse(subject.body)['hole']).to include('name' => hole.name, 'subdomain' => hole.subdomain)
+      end
+    end
+  end
+
+  describe '#update' do
+    let(:name) { 'foo' }
+    let(:subdomain) { 'foo' }
+    let(:params) { { hole: { subdomain: subdomain, name: name } } }
+    let(:hole) { create(:hole) }
+    before { hole.hole_memberships << HoleMembership.new(user: current_user, created_at: '1970-01-01'); hole.save! }
+    subject { put(:update, params: { id: hole.subdomain }.merge(params)) }
+
+    context 'with valid parameters' do
+      it 'returns a 200' do
+        expect(subject.response_code).to be(200)
+      end
+
+      it 'returns a JSON body' do
+        expect(JSON.parse(subject.body)['hole']).to include('name' => 'foo', 'subdomain' => 'foo')
+      end
+    end
+
+    describe 'with invalid parameters' do
+      let(:subdomain) { 'i like big buttcoin and i cannot lie' }
+
+      it 'returns a 422' do
+        expect(subject.response_code).to be(422)
       end
     end
   end

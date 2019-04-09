@@ -29,4 +29,17 @@ RSpec.describe Hole, type: :model do
       expect(subject.owner).to be_a(User)
     end
   end
+
+  describe '#rules' do
+    it 'returns a hash of rules' do
+      expect(subject.rules).to include(
+        {
+          chomments_enabled: false,
+          web_upload_enabled: false,
+          private_grabs_enabled: false,
+          chat_enabled: false
+        }
+      )
+    end
+  end
 end
