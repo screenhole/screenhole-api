@@ -2,6 +2,7 @@ class HolesController < ApplicationController
   before_action :authenticate_user
   before_action :authenticate_thinko_staff
   before_action :load_hole, only: %i[show update]
+  before_action :ensure_own_hole, only: %i[update]
 
   def create
     @hole = Hole.new(hole_params)
@@ -41,5 +42,9 @@ class HolesController < ApplicationController
 
   def load_hole
     @hole = Hole.find_by!(subdomain: params[:id])
+  end
+
+  def ensure_own_hole
+    raise ActionController::RoutingError, "You don't own that, pal" unless @hole.owner == current_user
   end
 end

@@ -65,6 +65,7 @@ describe HolesController, type: :controller do
     let(:subdomain) { 'foo' }
     let(:params) { { hole: { subdomain: subdomain, name: name } } }
     let(:hole) { create(:hole) }
+    before { hole.hole_memberships << HoleMembership.new(user: current_user, created_at: '1970-01-01'); hole.save! }
     subject { put(:update, params: { id: hole.subdomain }.merge(params)) }
 
     context 'with valid parameters' do
