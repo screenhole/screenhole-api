@@ -1,6 +1,7 @@
 class HolesController < ApplicationController
   before_action :authenticate_user
   before_action :authenticate_thinko_staff
+  before_action :load_hole, only: %i[show update]
 
   def create
     @hole = Hole.new(hole_params)
@@ -17,8 +18,15 @@ class HolesController < ApplicationController
   end
 
   def show
-    @hole = Hole.find_by!(subdomain: params[:id])
     render json: @hole
+  end
+
+  def update
+    if @hole.update(hole_params)
+      render json: @hole
+    else
+      respond_with_errors(@hole)
+    end
   end
 
   private
@@ -26,7 +34,12 @@ class HolesController < ApplicationController
   def hole_params
     params.require(:hole).permit(
       :name,
-      :subdomain
+      :subdomain,
+      *Hole::RULES
     )
+  end
+
+  def load_hole
+    @hole = Hole.find_by!(subdomain: params[:id])
   end
 end

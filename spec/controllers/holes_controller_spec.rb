@@ -59,4 +59,30 @@ describe HolesController, type: :controller do
       end
     end
   end
+
+  describe '#update' do
+    let(:name) { 'foo' }
+    let(:subdomain) { 'foo' }
+    let(:params) { { hole: { subdomain: subdomain, name: name } } }
+    let(:hole) { create(:hole) }
+    subject { put(:update, params: { id: hole.subdomain }.merge(params)) }
+
+    context 'with valid parameters' do
+      it 'returns a 200' do
+        expect(subject.response_code).to be(200)
+      end
+
+      it 'returns a JSON body' do
+        expect(JSON.parse(subject.body)['hole']).to include('name' => 'foo', 'subdomain' => 'foo')
+      end
+    end
+
+    describe 'with invalid parameters' do
+      let(:subdomain) { 'i like big buttcoin and i cannot lie' }
+
+      it 'returns a 422' do
+        expect(subject.response_code).to be(422)
+      end
+    end
+  end
 end
