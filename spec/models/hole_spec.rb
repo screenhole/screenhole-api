@@ -25,8 +25,6 @@ RSpec.describe Hole, type: :model do
   end
 
   describe '#owner' do
-    before { subject.hole_memberships.take.update(owner: true) }
-
     it 'returns the owner of the hole' do
       expect(subject.owner).to be_a(User)
     end

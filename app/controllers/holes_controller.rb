@@ -6,8 +6,7 @@ class HolesController < ApplicationController
     @hole = Hole.new(hole_params)
 
     @hole.hole_memberships << HoleMembership.new(
-      user: current_user,
-      owner: true
+      user: current_user
     )
 
     if @hole.save

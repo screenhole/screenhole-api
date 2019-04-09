@@ -17,6 +17,6 @@ class Hole < ApplicationRecord
   )
 
   def owner
-    hole_memberships.where(owner: true).take.try(:user)
+    hole_memberships.order('created_at ASC').first.try(&:user)
   end
 end
