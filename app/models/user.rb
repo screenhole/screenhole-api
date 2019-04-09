@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :email, case_sensitive: false, allow_blank: false
 
   validates_exclusion_of :username, in: Blacklist.words
+  validates_format_of :username, with: /\A[A-Za-z0-9_]+\z/
 
   validates_presence_of :username, :email
 
