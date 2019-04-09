@@ -1,6 +1,6 @@
 module Blacklist
   def self.words
-    @words ||= file.split("\n").map(&:strip)
+    @words ||= file.split("\n").map(&:strip).reject(&:blank?).reject { |l| l.starts_with?('#') }
   end
 
   def self.file

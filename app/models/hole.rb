@@ -1,13 +1,4 @@
 class Hole < ApplicationRecord
-  HARD_BLACKLIST_EXACT_MATCH = %w[
-    api
-    news
-    old
-    preview
-    staging-api
-    staging
-    www
-  ].freeze
 
   HARD_BLACKLIST_REGEX = [
     # anti-impersonation
@@ -33,7 +24,7 @@ class Hole < ApplicationRecord
     presence: true,
     format: /\A[a-z0-9\-]+\z/,
     length: { minimum: 3, maximum: 30 },
-    exclusion: Blacklist.words + HARD_BLACKLIST_EXACT_MATCH
+    exclusion: Blacklist.words
   )
 
   HARD_BLACKLIST_REGEX.each do |r|

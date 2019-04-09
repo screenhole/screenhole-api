@@ -20,18 +20,10 @@ RSpec.describe Hole, type: :model do
         it { is_expected.to_not allow_value('telnet').for(:subdomain) }
       end
 
-      describe 'hard blacklist' do
-        describe 'exact match' do
-          Hole::HARD_BLACKLIST_EXACT_MATCH.each do |phrase|
-            it { is_expected.to_not allow_value(phrase).for(:subdomain) }
-          end
-        end
-
-        describe 'regex' do
-          it { is_expected.to_not allow_value('thinko-hiring').for(:subdomain) }
-          it { is_expected.to_not allow_value('screenhole-admin').for(:subdomain) }
-          it { is_expected.to_not allow_value('free-lenovo-thinkpad').for(:subdomain) }
-        end
+      describe 'regex blacklist' do
+        it { is_expected.to_not allow_value('thinko-hiring').for(:subdomain) }
+        it { is_expected.to_not allow_value('screenhole-admin').for(:subdomain) }
+        it { is_expected.to_not allow_value('free-lenovo-thinkpad').for(:subdomain) }
       end
     end
   end
