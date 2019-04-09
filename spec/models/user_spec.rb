@@ -54,45 +54,6 @@ describe User, type: :model do
     end
   end
 
-  describe '#country_code' do
-    it 'only accepts valid countries' do
-      subject.country_code = 'cheese'
-      expect(subject.valid?).to be false
-    end
-  end
-
-  describe '#country_emoji' do
-    context 'with no country_code set' do
-      it 'returns a checkered flag' do
-        expect(subject.country_emoji).to eq('🏁')
-      end
-    end
-
-    context 'with a country code set' do
-      subject { create(:user, country_code: 'FI') }
-
-      it 'returns the relevant flag' do
-        expect(subject.country_emoji).to eq('🇫🇮')
-      end
-    end
-  end
-
-  describe '#time_now' do
-    context 'when no country_code is set' do
-      it 'returns nil' do
-        expect(subject.country_code).to be nil
-      end
-    end
-
-    context 'with a country code set' do
-      subject { create(:user, country_code: 'FI' )}
-
-      it 'returns a time' do
-        expect(subject.time_now).to match(/^\d{2}:\d{2}$/)
-      end
-    end
-  end
-
   describe '#badges' do
     it 'returns a non-empty array' do
       expect(subject.badges).to_not be_empty
