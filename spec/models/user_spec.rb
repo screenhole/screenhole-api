@@ -3,6 +3,11 @@ require 'rails_helper'
 describe User, type: :model do
   subject { create(:user) }
 
+  describe 'validations' do
+    it { is_expected.to allow_value('peterParker_2018').for(:username) }
+    it { is_expected.to_not allow_value('sam@example.com').for(:username) }
+  end
+
   describe 'associations' do
     it { is_expected.to have_many(:hole_memberships) }
     it { is_expected.to have_many(:holes).through(:hole_memberships) }
