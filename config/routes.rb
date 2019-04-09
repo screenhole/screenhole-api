@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
   resources :holes, only: %i[create show]
 
+  resources :upload_tokens, only: %i[create]
+
   resources :grabs, only: [:index, :show, :create, :destroy] do
     post 'report' => 'grabs#report'
 
