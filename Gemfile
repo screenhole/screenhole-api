@@ -23,6 +23,7 @@ gem 'countries'
 gem 'tzinfo'
 gem 'tzinfo-data'
 gem 'puma_worker_killer'
+gem 'jwt'
 
 # admin tools
 gem 'administrate'
