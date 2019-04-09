@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe HolesController, type: :controller do
-  let(:token) { Knock::AuthToken.new(payload: { sub: create(:user, is_staff: true).id }).token }
+  let(:current_user) { create(:user, is_staff: true) }
+  let(:token) { Knock::AuthToken.new(payload: { sub: current_user.id }).token }
   before { request.headers.merge!('Authorization' => "Bearer #{token}") }
 
   describe '#create' do
@@ -17,6 +18,11 @@ describe HolesController, type: :controller do
 
       it 'returns a JSON body' do
         expect(JSON.parse(subject.body)).to eq('hole' => { 'name' => 'foo', 'subdomain' => 'foo' })
+      end
+
+      it 'sets the current user as the hole owner' do
+        subject
+        expect(Hole.find_by!(subdomain: subdomain).owner).to eq(current_user)
       end
     end
 
