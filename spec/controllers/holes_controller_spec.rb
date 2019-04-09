@@ -17,7 +17,7 @@ describe HolesController, type: :controller do
       end
 
       it 'returns a JSON body' do
-        expect(JSON.parse(subject.body)).to eq('hole' => { 'name' => 'foo', 'subdomain' => 'foo' })
+        expect(JSON.parse(subject.body)['hole']).to include('name' => 'foo', 'subdomain' => 'foo')
       end
 
       it 'sets the current user as the hole owner' do
@@ -55,7 +55,7 @@ describe HolesController, type: :controller do
       end
 
       it 'returns a JSON body' do
-        expect(JSON.parse(subject.body)).to eq('hole' => { 'name' => hole.name, 'subdomain' => hole.subdomain })
+        expect(JSON.parse(subject.body)['hole']).to include('name' => hole.name, 'subdomain' => hole.subdomain)
       end
     end
   end
