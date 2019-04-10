@@ -67,7 +67,6 @@ alerts
 alpha
 amp
 analytics
-api
 app
 apps
 asc
@@ -305,7 +304,6 @@ my
 net
 network
 new
-news
 newsletter
 newsletters
 next
@@ -440,7 +438,6 @@ ssladmin
 ssladministrator
 sslwebmaster
 stage
-staging
 stat
 static
 statistics
@@ -511,7 +508,6 @@ widgets
 wiki
 wpad
 write
-www
 www-data
 www1
 www2
@@ -525,3 +521,12 @@ tagged
 plus
 rails
 snapper
+
+# Screenhole-specific
+api
+news
+old
+preview
+staging-api
+staging
+www

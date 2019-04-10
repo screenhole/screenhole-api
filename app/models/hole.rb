@@ -1,4 +1,13 @@
 class Hole < ApplicationRecord
+
+  HARD_BLACKLIST_REGEX = [
+    # anti-impersonation
+    /\Athinko.*/i,
+    /\Ascreenhole.*/i,
+    # trademark protection
+    /lenovo/i
+  ].freeze
+
   RULES = %i[chat_enabled chomments_enabled web_upload_enabled private_grabs_enabled].freeze
 
   has_many :grabs, dependent: :destroy
@@ -17,6 +26,10 @@ class Hole < ApplicationRecord
     length: { minimum: 3, maximum: 30 },
     exclusion: Blacklist.words
   )
+
+  HARD_BLACKLIST_REGEX.each do |r|
+    validates_format_of :subdomain, without: r
+  end
 
   def owner
     hole_memberships.order('created_at ASC').first.try(&:user)
