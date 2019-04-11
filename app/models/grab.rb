@@ -26,7 +26,11 @@ class Grab < ApplicationRecord
 
     grabs = Grab.includes(:user, :memos)
 
-    grabs = grabs.where(hole_id: hole.id) if hole.present?
+    if hole.present?
+      grabs = grabs.where(hole_id: hole.id)
+    else
+      grabs = grabs.where(hole_id: nil)
+    end
 
     grabs.page(page).per(per_page).reverse_order
   end
