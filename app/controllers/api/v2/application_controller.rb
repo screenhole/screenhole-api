@@ -27,7 +27,7 @@ class Api::V2::ApplicationController < ActionController::API
 
     authenticate_user
 
-    return unless current_user&.is_staff?
+    return if current_user&.is_staff?
 
     raise ActionController::RoutingError, 'go away, prole'
   end
