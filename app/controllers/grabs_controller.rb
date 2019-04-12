@@ -4,7 +4,6 @@ class GrabsController < ApplicationController
   def index
     grabs = Grab.feed(
       page: params[:page],
-      hole: hole,
       user_id: params[:user_id]
     )
 
@@ -84,12 +83,6 @@ class GrabsController < ApplicationController
   end
 
   private
-
-  def hole
-    return nil unless params[:hole].present?
-
-    @hole ||= Hole.find_by(subdomain: params[:hole])
-  end
 
   def blockees
     return @blockees if @blockees

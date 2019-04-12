@@ -41,7 +41,7 @@ class HolesController < ApplicationController
   end
 
   def load_hole
-    @hole = Hole.find_by!(subdomain: params[:id])
+    @hole = current_user.holes.find_by!(subdomain: params[:id])
   end
 
   def ensure_own_hole
