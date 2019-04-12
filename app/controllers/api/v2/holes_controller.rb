@@ -1,6 +1,5 @@
 class Api::V2::HolesController < Api::V2::ApplicationController
-  before_action :authenticate_user
-  before_action :authenticate_thinko_staff
+  before_action :authenticate_user, except: %[show]
   before_action :load_readable_hole, only: %i[show]
   before_action :load_writable_hole, only: %i[update]
   before_action :ensure_hole_ownership, only: %i[update]

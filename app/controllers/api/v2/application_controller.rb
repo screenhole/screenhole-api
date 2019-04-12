@@ -3,8 +3,8 @@ class Api::V2::ApplicationController < ActionController::API
 
   serialization_scope :current_user
 
-  before_action :authenticate_user
   before_action :refresh_bearer_auth_header
+  before_action :authenticate_thinko_staff
 
   def pagination_dict(collection)
     {
@@ -23,7 +23,13 @@ class Api::V2::ApplicationController < ActionController::API
   private
 
   def authenticate_thinko_staff
-    raise ActionController::RoutingError, 'not staff' unless current_user&.is_staff?
+    return if ENV['MULTIHOLE_IS_GO'] == 'YES'
+
+    authenticate_user
+
+    return unless current_user&.is_staff?
+
+    raise ActionController::RoutingError, 'go away, prole'
   end
 
   def refresh_bearer_auth_header
