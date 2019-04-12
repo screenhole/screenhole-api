@@ -1,7 +1,8 @@
 class HoleGrabsController < ApplicationController
   before_action :authenticate_user
   before_action :authenticate_thinko_staff
-  before_action :load_hole
+  before_action :load_readable_hole, only: %i[index show]
+  before_action :load_writable_hole, only: %i[create]
 
   def index
     @grabs = Grab.feed(
@@ -24,6 +25,8 @@ class HoleGrabsController < ApplicationController
   def create
     @grab = current_user.grabs.new(grab_params)
 
+    @grab.hole = @hole
+
     if @grab.save
       # TODO: ActionCable, Buttcoin credits
       render json: @grab
@@ -31,6 +34,7 @@ class HoleGrabsController < ApplicationController
       respond_with_errors(@grab)
     end
   end
+
 
   private
 
@@ -41,7 +45,11 @@ class HoleGrabsController < ApplicationController
     )
   end
 
-  def load_hole
-    @hole ||= current_user.holes.find_by!(subdomain: params[:hole_id])
+  def load_readable_hole
+    @hole = Hole.find_by!(subdomain: params[:hole_id])
+  end
+
+  def load_writable_hole
+    @hole = current_user.holes.find_by!(subdomain: params[:hole_id])
   end
 end
