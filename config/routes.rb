@@ -12,23 +12,25 @@ Rails.application.routes.draw do
     root to: 'users#index'
   end
 
+  namespace :api do
+    namespace :v2 do
+      resources :holes, only: %i[create show update] do
+        resources :grabs, controller: :hole_grabs, only: %i[index show create]
+      end
+
+      resources :upload_tokens, only: %i[create]
+    end
+  end
+
   root to: 'grabs#index'
 
   get '/sup/any' => 'notes#any'
   get '/sup' => 'notes#index'
 
-  get '/svc/buttcoin/market_cap' => 'services#buttcoin_market_cap'
-
-  post '/svc/memo/voice' => 'services#voice_memo'
-
   get '/buttcoins', to: 'buttcoins#index'
   get '/buttcoins/trends', to: 'buttcoins#trends'
 
-  resources :holes, only: %i[create show update] do
-    resources :grabs, controller: :hole_grabs, only: %i[index show create]
-  end
 
-  resources :upload_tokens, only: %i[create]
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
     post 'report' => 'grabs#report'

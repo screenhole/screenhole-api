@@ -1,4 +1,4 @@
-class HolesController < ApplicationController
+class Api::V2::HolesController < Api::V2::ApplicationController
   before_action :authenticate_user
   before_action :authenticate_thinko_staff
   before_action :load_readable_hole, only: %i[show]

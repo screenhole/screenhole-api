@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UploadTokensController, type: :controller do
+describe Api::V2::UploadTokensController, type: :controller do
   let(:current_user) { create(:user) }
   let(:token) { Knock::AuthToken.new(payload: { sub: current_user.id }).token }
   before { request.headers.merge!('Authorization' => "Bearer #{token}") }
