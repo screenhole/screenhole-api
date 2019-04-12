@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     namespace :v2 do
       resources :holes, only: %i[create show update] do
         resources :grabs, controller: :hole_grabs, only: %i[index show create]
+        resources :chat_messages, controller: :hole_chat_messages, only: %i[index create destroy]
       end
 
       resources :upload_tokens, only: %i[create]

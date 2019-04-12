@@ -30,6 +30,7 @@ RSpec.describe Hole, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:grabs) }
+    it { is_expected.to have_many(:chat_messages) }
     it { is_expected.to have_many(:hole_memberships) }
     it { is_expected.to have_many(:users).through(:hole_memberships) }
   end

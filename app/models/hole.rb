@@ -11,6 +11,8 @@ class Hole < ApplicationRecord
   RULES = %i[chat_enabled chomments_enabled web_upload_enabled private_grabs_enabled].freeze
 
   has_many :grabs, dependent: :destroy
+  has_many :chat_messages, dependent: :destroy
+
   has_many :hole_memberships
   has_many :users, through: :hole_memberships
 
