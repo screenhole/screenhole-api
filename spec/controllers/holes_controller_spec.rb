@@ -37,6 +37,7 @@ describe HolesController, type: :controller do
 
   describe '#show' do
     let(:hole) { create(:hole) }
+    before { create(:hole_membership, user: current_user, hole: hole) }
     subject { get(:show, params: { id: subdomain }) }
 
     context 'with a non-existent subdomain' do
