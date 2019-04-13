@@ -20,18 +20,14 @@ Rails.application.routes.draw do
       end
 
       resources :upload_tokens, only: %i[create]
+      resources :notifications, only: %i[index]
     end
   end
 
   root to: 'grabs#index'
 
-  get '/sup/any' => 'notes#any'
-  get '/sup' => 'notes#index'
-
   get '/buttcoins', to: 'buttcoins#index'
   get '/buttcoins/trends', to: 'buttcoins#trends'
-
-
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
     post 'report' => 'grabs#report'
