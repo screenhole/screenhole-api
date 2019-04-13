@@ -17,7 +17,11 @@ Rails.application.routes.draw do
       # new for multi-hole
       resources :holes, only: %i[create show update] do
         # replaces /grabs
-        resources :grabs, only: %i[index show create] # TODO: destroy, report, comments, tips
+        resources :grabs, only: %i[index show create destroy] do
+          member do
+            post :report
+          end
+        end
 
         # replaces /chomments
         resources :chat_messages, only: %i[index create destroy]
