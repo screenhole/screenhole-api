@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe HolesController, type: :controller do
+describe Api::V2::HolesController, type: :controller do
   let(:current_user) { create(:user, is_staff: true) }
   let(:token) { Knock::AuthToken.new(payload: { sub: current_user.id }).token }
   before { request.headers.merge!('Authorization' => "Bearer #{token}") }

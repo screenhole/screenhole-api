@@ -8,5 +8,9 @@ FactoryBot.define do
     password_confirmation { 'cheeseboard' }
 
     bio { 'how much wood could a wood chuck chuck if a wood chuck could chuck wood' }
+
+    after(:create) do |user|
+      user.buttcoin_transaction(20_000)
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_09_225854) do
+ActiveRecord::Schema.define(version: 2019_04_12_223835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 2019_04_09_225854) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_buttcoins_on_user_id"
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "hole_id"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hole_id"], name: "index_chat_messages_on_hole_id"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
   create_table "chomments", force: :cascade do |t|
@@ -130,6 +140,8 @@ ActiveRecord::Schema.define(version: 2019_04_09_225854) do
   end
 
   add_foreign_key "buttcoins", "users"
+  add_foreign_key "chat_messages", "holes"
+  add_foreign_key "chat_messages", "users"
   add_foreign_key "grabs", "holes"
   add_foreign_key "hole_memberships", "holes"
   add_foreign_key "hole_memberships", "users"

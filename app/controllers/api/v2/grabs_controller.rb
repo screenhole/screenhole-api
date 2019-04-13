@@ -1,8 +1,7 @@
-class HoleGrabsController < ApplicationController
-  before_action :authenticate_user
-  before_action :authenticate_thinko_staff
+class Api::V2::GrabsController < Api::V2::ApplicationController
+  before_action :authenticate_user, except: %i[index show]
   before_action :load_readable_hole, only: %i[index show]
-  before_action :load_writable_hole, only: %i[create]
+  before_action :load_writable_hole, only: %i[create destroy]
 
   def index
     @grabs = Grab.feed(
@@ -35,6 +34,20 @@ class HoleGrabsController < ApplicationController
     end
   end
 
+  def destroy
+    @grab = @hole.find(params[:id])
+
+    if @grab.destroy
+      # TODO: ActionCable
+      head :no_content
+    else
+      respond_with_errors(@grab)
+    end
+  end
+
+  def report
+    head :not_found
+  end
 
   private
 

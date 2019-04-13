@@ -12,23 +12,54 @@ Rails.application.routes.draw do
     root to: 'users#index'
   end
 
+  namespace :api do
+    namespace :v2 do
+      # new for multi-hole
+      resources :holes, only: %i[create show update] do
+        # replaces /grabs
+        resources :grabs, only: %i[index show create destroy] do
+          member do
+            post :report
+          end
+
+          # TODO
+          resources :comments, controller: :grab_comments, only: %i[create destroy]
+          resources :tips, controller: :grab_tips, only: %i[create]
+        end
+
+        # replaces /chomments
+        resources :chat_messages, only: %i[index create destroy]
+      end
+
+      # new for multi-hole
+      resources :upload_tokens, only: %i[create]
+
+      # replaces /sup
+      resources :notifications, only: %i[index]
+
+      # replaces /buttcoins
+      resources :currency, only: %i[index] do
+        collection do
+          get :trends
+        end
+      end
+
+      # replaces /invites
+      resources :invitations, only: %i[index create] do
+        collection do
+          get :price
+        end
+      end
+    end
+  end
+
   root to: 'grabs#index'
 
   get '/sup/any' => 'notes#any'
   get '/sup' => 'notes#index'
 
-  get '/svc/buttcoin/market_cap' => 'services#buttcoin_market_cap'
-
-  post '/svc/memo/voice' => 'services#voice_memo'
-
   get '/buttcoins', to: 'buttcoins#index'
   get '/buttcoins/trends', to: 'buttcoins#trends'
-
-  resources :holes, only: %i[create show update] do
-    resources :grabs, controller: :hole_grabs, only: %i[index show create]
-  end
-
-  resources :upload_tokens, only: %i[create]
 
   resources :grabs, only: [:index, :show, :create, :destroy] do
     post 'report' => 'grabs#report'
@@ -61,4 +92,9 @@ Rails.application.routes.draw do
 
   # for old clients
   post '/shots' => 'grabs#create'
+
+  # MUST MAINTAIN:
+  # - POST /shots (very old client support)
+  # - POST /grabs (upload from native clients)
+  # - POST /users/token (used by some versions of the Mac app for login)
 end

@@ -1,0 +1,40 @@
+# exclude generated code from linting
+AllCops:
+  Exclude:
+    - "db/**/*"
+    - "config/**/*"
+    - "test/**/*"
+    - "script/**/*"
+    - "bin/**/*"
+
+# extend acceptable line length to 120 chars
+Metrics/LineLength:
+  Max: 120
+
+# drop requirement for documentation on all classes
+Style/Documentation:
+  Enabled: false
+
+# allow absence of "# frozen_string_literal" comment (for now)
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+# allow Foo::Bar shorthand format rather than requiring nested modules
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+# allow us to order our gems how we want
+Bundler/OrderedGems:
+  Enabled: false
+
+# disable various automated metrics that are largely unhelpful
+Metrics/BlockLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
