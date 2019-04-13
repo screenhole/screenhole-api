@@ -29,6 +29,8 @@ describe Api::V2::InvitationsController, type: :controller do
       it 'returns a 200' do
         expect(subject.response_code).to be(200)
       end
+
+      it 'debits buttcoin'
     end
 
     context 'with insufficient funds' do

@@ -57,5 +57,7 @@ describe Api::V2::ChatMessagesController, type: :controller do
     it 'returns a 204' do
       expect(subject.response_code).to be(204)
     end
+
+    it 'publishes deletion over ActionCable'
   end
 end
