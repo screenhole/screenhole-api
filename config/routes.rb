@@ -35,6 +35,13 @@ Rails.application.routes.draw do
           get :trends
         end
       end
+
+      # replace /invites
+      resources :invitations, only: %i[index create] do
+        collection do
+          get :price
+        end
+      end
     end
   end
 

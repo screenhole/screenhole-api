@@ -5,6 +5,12 @@ class Invite < ApplicationRecord
 
   before_create :generate_code
 
+  validate do
+    if (user.buttcoin_balance + Buttcoin::AMOUNTS[:generate_invite]).negative?
+      errors.add(:base, 'insufficient funds')
+    end
+  end
+
   def redeemed
     !! invited_id
   end
