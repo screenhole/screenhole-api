@@ -14,12 +14,19 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v2 do
+      # new for multi-hole
       resources :holes, only: %i[create show update] do
-        resources :grabs, controller: :hole_grabs, only: %i[index show create]
-        resources :chat_messages, controller: :hole_chat_messages, only: %i[index create destroy]
+        # replaces /grabs
+        resources :grabs, only: %i[index show create] # TODO: destroy, report, comments, tips
+
+        # replaces /chomments
+        resources :chat_messages, only: %i[index create destroy]
       end
 
+      # new for multi-hole
       resources :upload_tokens, only: %i[create]
+
+      # replaces /sup
       resources :notifications, only: %i[index]
     end
   end
