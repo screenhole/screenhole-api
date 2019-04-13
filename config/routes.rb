@@ -92,4 +92,9 @@ Rails.application.routes.draw do
 
   # for old clients
   post '/shots' => 'grabs#create'
+
+  # MUST MAINTAIN:
+  # - POST /shots (very old client support)
+  # - POST /grabs (upload from native clients)
+  # - POST /users/token (used by some versions of the Mac app for login)
 end
