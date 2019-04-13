@@ -24,6 +24,7 @@ class Hole < ApplicationRecord
   validates(
     :subdomain,
     presence: true,
+    uniqueness: true,
     format: /\A[a-z0-9\-]+\z/,
     length: { minimum: 3, maximum: 30 },
     exclusion: Blacklist.words

@@ -13,16 +13,15 @@ describe Api::V2::CurrencyController, type: :controller do
     end
 
     context 'with some transactions' do
-      before do
-        create(:buttcoin, user: current_user, amount: 420)
-        create(:buttcoin, user: current_user, amount: -69)
-      end
+      let(:subtraction) { 69 }
+      let!(:balance) { current_user.buttcoin_balance }
+      before { create(:buttcoin, user: current_user, amount: -subtraction) }
 
       it 'reflects them in the response' do
         expect(JSON.parse(subject.body)).to match(
-          'earned' => 420,
-          'spent' => 69,
-          'profit' => 351
+          'earned' => balance,
+          'spent' => subtraction,
+          'profit' => balance - subtraction
         )
       end
     end
