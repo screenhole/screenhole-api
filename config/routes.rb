@@ -47,6 +47,9 @@ Rails.application.routes.draw do
 
   root to: 'grabs#index'
 
+  get '/sup/any' => 'notes#any'
+  get '/sup' => 'notes#index'
+
   get '/buttcoins', to: 'buttcoins#index'
   get '/buttcoins/trends', to: 'buttcoins#trends'
 
