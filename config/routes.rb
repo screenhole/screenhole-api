@@ -21,6 +21,10 @@ Rails.application.routes.draw do
           member do
             post :report
           end
+
+          # TODO
+          resources :comments, controller: :grab_comments, only: %i[create destroy]
+          resources :tips, controller: :grab_tips, only: %i[create]
         end
 
         # replaces /chomments
