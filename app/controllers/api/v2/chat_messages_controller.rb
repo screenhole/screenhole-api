@@ -31,6 +31,7 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
     @chat_message = @hole.chat_messages.find_by!(id: params[:id], user: current_user)
 
     if @chat_message.destroy
+      # TODO: ActionCable
       head :no_content
     else
       respond_with_errors(@chat_message)

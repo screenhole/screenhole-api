@@ -9,7 +9,7 @@ class Api::V2::InvitationsController < Api::V2::ApplicationController
     @invite = current_user.invites.new
 
     if @invite.save
-      # TODO: credit buttcoin
+      # TODO: debit buttcoin
       render json: @invite
     else
       respond_with_errors(@invite)
