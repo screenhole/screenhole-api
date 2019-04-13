@@ -28,6 +28,13 @@ Rails.application.routes.draw do
 
       # replaces /sup
       resources :notifications, only: %i[index]
+
+      # replaces /buttcoins
+      resources :currency, only: %i[index] do
+        collection do
+          get :trends
+        end
+      end
     end
   end
 
