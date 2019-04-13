@@ -1,4 +1,4 @@
-class Api::V2::HoleGrabsController < Api::V2::ApplicationController
+class Api::V2::GrabsController < Api::V2::ApplicationController
   before_action :authenticate_user, except: %i[index show]
   before_action :load_readable_hole, only: %i[index show]
   before_action :load_writable_hole, only: %i[create]
@@ -33,7 +33,6 @@ class Api::V2::HoleGrabsController < Api::V2::ApplicationController
       respond_with_errors(@grab)
     end
   end
-
 
   private
 

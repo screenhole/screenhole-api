@@ -3,8 +3,8 @@ class Api::V2::ApplicationController < ActionController::API
 
   serialization_scope :current_user
 
-  before_action :refresh_bearer_auth_header
   before_action :authenticate_thinko_staff
+  before_action :refresh_bearer_auth_header
 
   def pagination_dict(collection)
     {

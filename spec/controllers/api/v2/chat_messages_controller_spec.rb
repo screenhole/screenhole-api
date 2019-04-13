@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V2::HoleChatMessagesController, type: :controller do
+describe Api::V2::ChatMessagesController, type: :controller do
   let(:current_user) { create(:user, is_staff: true) }
   let(:hole) { create(:hole) }
   let(:token) { Knock::AuthToken.new(payload: { sub: current_user.id }).token }
