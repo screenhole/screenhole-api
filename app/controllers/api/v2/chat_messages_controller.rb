@@ -1,5 +1,5 @@
 class Api::V2::ChatMessagesController < Api::V2::ApplicationController
-  before_action :authenticate_user, except: %i[index]
+  before_action :authenticate_user, except: %i[index legacy_index]
   before_action :load_readable_hole, only: %i[index]
   before_action :load_writable_hole, only: %i[create destroy]
 
@@ -11,6 +11,16 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
     render(
       json: @chat_messages,
       meta: pagination_dict(@chat_messages)
+    )
+  end
+
+  def legacy_index
+    @chomments = Chomment.includes(:user, :cross_ref).order("created_at desc").page(params[:page]).per(PER_PAGE)
+
+    render(
+      json: @chomments,
+      meta: pagination_dict(@chomments),
+      root: 'chat_messages'
     )
   end
 
