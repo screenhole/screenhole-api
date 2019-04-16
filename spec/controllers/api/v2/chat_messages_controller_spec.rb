@@ -71,4 +71,13 @@ describe Api::V2::ChatMessagesController, type: :controller do
       expect(body['chat_messages']).to_not be_empty
     end
   end
+
+  describe '#legacy_create' do
+    subject { post(:legacy_create, params: { chat_message: { message: 'dummy thicc' } }) }
+
+    it 'returns a created old-style chomment' do
+      expect(subject.response_code).to be(200)
+      expect(JSON.parse(subject.body)['chat_message']['message']).to eq('dummy thicc')
+    end
+  end
 end
