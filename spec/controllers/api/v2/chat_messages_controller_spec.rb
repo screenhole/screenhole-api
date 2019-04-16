@@ -60,4 +60,15 @@ describe Api::V2::ChatMessagesController, type: :controller do
 
     it 'publishes deletion over ActionCable'
   end
+
+  describe '#legacy_index' do
+    subject { get(:legacy_index) }
+    before { create(:chomment) }
+
+    it 'returns a list of old-style chomments' do
+      body = JSON.parse(subject.body)
+      expect(body).to have_key('chat_messages')
+      expect(body['chat_messages']).to_not be_empty
+    end
+  end
 end
