@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   namespace :admin do
-    resources :buttcoins, only: %i(index show new create edit update destroy)
-    resources :chomments, only: %i(index show new create edit update destroy)
-    resources :grabs, only: %i(index show new create edit update destroy)
-    resources :users, only: %i(index show new create edit update destroy)
-    resources :holes, only: %i(index show new create edit update destroy)
-    resources :invites, only: %i(index show new create edit update destroy)
-    resources :memos, only: %i(index show new create edit update destroy)
-    resources :notes, only: %i(index show new create edit update destroy)
+    resources :buttcoins, only: %i[index show new create edit update destroy]
+    resources :chomments, only: %i[index show new create edit update destroy]
+    resources :grabs, only: %i[index show new create edit update destroy]
+    resources :users, only: %i[index show new create edit update destroy]
+    resources :holes, only: %i[index show new create edit update destroy]
+    resources :invites, only: %i[index show new create edit update destroy]
+    resources :memos, only: %i[index show new create edit update destroy]
+    resources :notes, only: %i[index show new create edit update destroy]
 
     root to: 'users#index'
   end
@@ -31,7 +31,8 @@ Rails.application.routes.draw do
         resources :chat_messages, only: %i[index create destroy]
       end
 
-      get '/chat_messages', controller: :chat_messages, action: :legacy_index
+      get :chat_messages, controller: :chat_messages, action: :legacy_index
+      post :chat_messages, controller: :chat_messages, action: :legacy_create
 
       # new for multi-hole
       resources :upload_tokens, only: %i[create]
@@ -63,21 +64,21 @@ Rails.application.routes.draw do
   get '/buttcoins', to: 'buttcoins#index'
   get '/buttcoins/trends', to: 'buttcoins#trends'
 
-  resources :grabs, only: [:index, :show, :create, :destroy] do
+  resources :grabs, only: %i[index show create destroy] do
     post 'report' => 'grabs#report'
 
-    resources :memos, only: [:index, :show, :update, :create, :destroy]
+    resources :memos, only: %i[index show update create destroy]
   end
 
-  resources :chomments, only: [:index, :create, :destroy]
+  resources :chomments, only: %i[index create destroy]
 
-  resources :invites, only: [:index, :create] do
+  resources :invites, only: %i[index create] do
     collection do
       get 'price' => 'invites#current_price'
     end
   end
 
-  resources :users, only: [:index, :show, :create] do
+  resources :users, only: %i[index show create] do
     post 'block' => 'users#block'
     post 'unblock' => 'users#unblock'
 
@@ -89,7 +90,7 @@ Rails.application.routes.draw do
       get 'token/refresh' => 'users#refresh_token'
     end
 
-    resources :grabs, only: [:index, :show]
+    resources :grabs, only: %i[index show]
   end
 
   # for old clients
