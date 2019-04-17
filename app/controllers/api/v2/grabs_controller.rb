@@ -35,7 +35,10 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
   end
 
   def destroy
-    @grab = current_user.grabs.find(params[:id])
+    @grab = Grab.find_by!(
+      hashid: params[:id],
+      hole: @hole
+    )
 
     if @grab.destroy
       # TODO: ActionCable
