@@ -39,4 +39,12 @@ class Api::V2::ApplicationController < ActionController::API
       payload: current_user.to_token_payload
     ).token
   end
+
+  def load_readable_hole
+    @hole = Hole.from_subdomain(params[:hole_id])
+  end
+
+  def load_writable_hole
+    @hole = current_user.holes.from_subdomain(params[:hole_id])
+  end
 end

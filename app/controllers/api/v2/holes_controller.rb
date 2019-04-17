@@ -41,11 +41,11 @@ class Api::V2::HolesController < Api::V2::ApplicationController
   end
 
   def load_readable_hole
-    @hole = Hole.find_by!(subdomain: params[:id])
+    @hole = Hole.from_subdomain(params[:id])
   end
 
   def load_writable_hole
-    @hole = current_user.holes.find_by!(subdomain: params[:id])
+    @hole = current_user.holes.from_subdomain(params[:id])
   end
 
   def ensure_hole_ownership

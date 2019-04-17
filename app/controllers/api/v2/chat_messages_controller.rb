@@ -6,22 +6,43 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
   PER_PAGE = 50
 
   def index
-    @chat_messages = @hole.chat_messages.page(params[:page]).per(PER_PAGE)
+    @chat_messages = if @hole
+                       @hole.chat_messages.page(params[:page]).per(PER_PAGE)
+                     else
+                       Chomment
+                         .includes(:user, :cross_ref)
+                         .order('created_at desc')
+                         .page(params[:page])
+                         .per(PER_PAGE)
+                     end
 
     render(
       json: @chat_messages,
-      meta: pagination_dict(@chat_messages)
+      meta: pagination_dict(@chat_messages),
+      root: 'chat_messages'
     )
   end
 
   def create
-    @chat_message = @hole.chat_messages.new(chat_message_params).tap do |m|
-      m.user = current_user
-    end
+    @chat_message = if @hole
+                      @hole.chat_messages.new(chat_message_params).tap do |m|
+                        m.user = current_user
+                      end
+                    else
+                      current_user.chomments.new(chat_message_params)
+                    end
 
     if @chat_message.save
+      if @chat_message.is_a?(Chomment)
+        @chat_message.notify_at_replied_users
+        current_user.buttcoin_transaction(
+          Buttcoin::AMOUNTS[:create_chomment],
+          "Generated chat message #{@chat_message.hashid}"
+        )
+      end
+
       # TODO: Notify @replied users, buttcoin credit, ActionCable
-      render json: @chat_message, status: :created
+      render json: @chat_message, status: :created, root: 'chat_message'
     else
       respond_with_errors(@chat_message)
     end
@@ -38,43 +59,9 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
     end
   end
 
-  def legacy_index
-    @chomments = Chomment.includes(:user, :cross_ref).order('created_at desc').page(params[:page]).per(PER_PAGE)
-
-    render(
-      json: @chomments,
-      meta: pagination_dict(@chomments),
-      root: 'chat_messages'
-    )
-  end
-
-  def legacy_create
-    chomment = current_user.chomments.new(chat_message_params)
-
-    if chomment.save
-      chomment.notify_at_replied_users
-      current_user.buttcoin_transaction(
-        Buttcoin::AMOUNTS[:create_chomment],
-        "Generated chomment #{chomment.hashid}"
-      )
-
-      render json: chomment, root: 'chat_message'
-    else
-      respond_with_errors(chomment)
-    end
-  end
-
   private
 
   def chat_message_params
     params.require(:chat_message).permit(:message)
-  end
-
-  def load_readable_hole
-    @hole = Hole.find_by!(subdomain: params[:hole_id])
-  end
-
-  def load_writable_hole
-    @hole = current_user.holes.find_by!(subdomain: params[:hole_id])
   end
 end
