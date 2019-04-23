@@ -31,9 +31,6 @@ Rails.application.routes.draw do
         resources :chat_messages, only: %i[index create destroy]
       end
 
-      get :chat_messages, controller: :chat_messages, action: :legacy_index
-      post :chat_messages, controller: :chat_messages, action: :legacy_create
-
       # new for multi-hole
       resources :upload_tokens, only: %i[create]
 

@@ -1,11 +1,12 @@
 class Hole < ApplicationRecord
-
   HARD_BLACKLIST_REGEX = [
     # anti-impersonation
     /\Athinko.*/i,
     /\Ascreenhole.*/i,
     # trademark protection
-    /lenovo/i
+    /lenovo/i,
+    # protected names
+    /\Aroot\z/
   ].freeze
 
   RULES = %i[chat_enabled chomments_enabled web_upload_enabled private_grabs_enabled].freeze
@@ -32,6 +33,12 @@ class Hole < ApplicationRecord
 
   HARD_BLACKLIST_REGEX.each do |r|
     validates_format_of :subdomain, without: r
+  end
+
+  def self.from_subdomain(subdomain)
+    return nil if subdomain == 'root'
+
+    find_by!(subdomain: subdomain)
   end
 
   def owner

@@ -35,7 +35,10 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
   end
 
   def destroy
-    @grab = @hole.find(params[:id])
+    @grab = Grab.find_by!(
+      hashid: params[:id],
+      hole: @hole
+    )
 
     if @grab.destroy
       # TODO: ActionCable
@@ -56,13 +59,5 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
       :description,
       :image_path
     )
-  end
-
-  def load_readable_hole
-    @hole = Hole.find_by!(subdomain: params[:hole_id])
-  end
-
-  def load_writable_hole
-    @hole = current_user.holes.find_by!(subdomain: params[:hole_id])
   end
 end
