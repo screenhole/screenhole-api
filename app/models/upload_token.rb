@@ -44,7 +44,8 @@ class UploadToken
     {
       method: 'PUT',
       url: url,
-      exp: 1.hour.from_now.to_i
+      exp: 1.hour.from_now.to_i,
+      maxContentLength: 10.megabytes.to_i
     }
   end
 
