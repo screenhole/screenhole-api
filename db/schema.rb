@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_25_161240) do
+ActiveRecord::Schema.define(version: 2019_04_25_210903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_04_25_161240) do
     t.text "description"
     t.integer "media_type", default: 0
     t.bigint "hole_id"
+    t.jsonb "accelerator_metadata"
     t.index ["hole_id"], name: "index_grabs_on_hole_id"
     t.index ["user_id"], name: "index_grabs_on_user_id"
   end

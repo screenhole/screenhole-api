@@ -23,6 +23,7 @@ gem 'tzinfo'
 gem 'tzinfo-data'
 gem 'puma_worker_killer'
 gem 'jwt'
+gem 'httparty'
 
 # admin tools
 gem 'administrate'
