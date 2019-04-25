@@ -13,9 +13,9 @@ class Grab < ApplicationRecord
 
   after_destroy :delete_media
 
+  after_create :hydrate_accelerator_metadata
   after_create :broadcast_via_cable
   after_create :credit_buttcoins
-  after_create :hydrate_accelerator_metadata
 
   def self.feed(page:, per_page: 25, hole: nil, user_id: nil)
     if user_id.present?
