@@ -59,6 +59,32 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
     end
   end
 
+  def legacy_index
+    @chomments = Chomment.includes(:user, :cross_ref).order('created_at desc').page(params[:page]).per(PER_PAGE)
+
+     render(
+      json: @chomments,
+      meta: pagination_dict(@chomments),
+      root: 'chat_messages'
+    )
+  end
+
+   def legacy_create
+    chomment = current_user.chomments.new(chat_message_params)
+
+     if chomment.save
+      chomment.notify_at_replied_users
+      current_user.buttcoin_transaction(
+        Buttcoin::AMOUNTS[:create_chomment],
+        "Generated chomment #{chomment.hashid}"
+      )
+
+       render json: chomment, root: 'chat_message'
+    else
+      respond_with_errors(chomment)
+    end
+  end
+
   private
 
   def chat_message_params
