@@ -1,10 +1,15 @@
 class GrabsChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "grabs_messages"
+    stream_from(
+      channel_name('grabs')
+    )
   end
 
   def receive(data)
-    ActionCable.server.broadcast "grabs_messages", data
+    ActionCable.server.broadcast(
+      channel_name('grabs'),
+      data
+    )
   end
 
   def unsubscribed

@@ -1,10 +1,15 @@
 class ChommentsChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "chomments_messages"
+    stream_from(
+      channel_name('chomments')
+    )
   end
 
   def receive(data)
-    ActionCable.server.broadcast "chomments_messages", data
+    ActionCable.server.broadcast(
+      channel_name('chomments'),
+      data
+    )
   end
 
   def unsubscribed

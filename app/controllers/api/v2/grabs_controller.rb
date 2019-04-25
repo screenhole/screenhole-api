@@ -41,7 +41,6 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
     )
 
     if @grab.destroy
-      # TODO: ActionCable
       head :no_content
     else
       respond_with_errors(@grab)

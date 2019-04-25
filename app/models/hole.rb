@@ -50,4 +50,8 @@ class Hole < ApplicationRecord
       [key, public_send(key)]
     end.to_h
   end
+
+  def cable_channel_name(prefix)
+    [prefix, subdomain, 'messages'].join('_')
+  end
 end

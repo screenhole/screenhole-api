@@ -15,6 +15,8 @@ class Grab < ApplicationRecord
 
   after_destroy :delete_media
 
+  after_create :broadcast_via_cable
+
   def self.feed(page:, per_page: 25, hole: nil, user_id: nil)
     if user_id.present?
       return User.find(user_id)
@@ -43,8 +45,17 @@ class Grab < ApplicationRecord
 
   private
 
-    def delete_media
-      obj = AWS_S3_BUCKET.object(image_path)
-      obj.delete
-    end
+  def delete_media
+    obj = AWS_S3_BUCKET.object(image_path)
+    obj.delete
+  end
+
+  def broadcast_via_cable
+    return unless hole.present?
+
+    ActionCable.server.broadcast(
+      hole.cable_channel_name('grabs'),
+      ActiveModelSerializers::SerializableResource.new(self).as_json
+    )
+  end
 end

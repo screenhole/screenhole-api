@@ -41,7 +41,7 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
         )
       end
 
-      # TODO: Notify @replied users, buttcoin credit, ActionCable
+      # TODO: Notify @replied users, buttcoin credit
       render json: @chat_message, status: :created, root: 'chat_message'
     else
       respond_with_errors(@chat_message)
@@ -52,7 +52,6 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
     @chat_message = @hole.chat_messages.find_by!(id: params[:id], user: current_user)
 
     if @chat_message.destroy
-      # TODO: ActionCable
       head :no_content
     else
       respond_with_errors(@chat_message)
@@ -62,28 +61,28 @@ class Api::V2::ChatMessagesController < Api::V2::ApplicationController
   def legacy_index
     @chomments = Chomment.includes(:user, :cross_ref).order('created_at desc').page(params[:page]).per(PER_PAGE)
 
-     render(
+    render(
       json: @chomments,
       meta: pagination_dict(@chomments),
       root: 'chat_messages'
     )
   end
 
-   def legacy_create
+  def legacy_create
     chomment = current_user.chomments.new(chat_message_params)
 
-     if chomment.save
+    if chomment.save
       chomment.notify_at_replied_users
       current_user.buttcoin_transaction(
         Buttcoin::AMOUNTS[:create_chomment],
         "Generated chomment #{chomment.hashid}"
       )
 
-       render json: chomment, root: 'chat_message'
+      render json: chomment, root: 'chat_message'
     else
       respond_with_errors(chomment)
-    end
-  end
+   end
+ end
 
   private
 
