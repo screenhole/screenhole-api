@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_223835) do
+ActiveRecord::Schema.define(version: 2019_04_25_161240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,9 @@ ActiveRecord::Schema.define(version: 2019_04_12_223835) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "hole_id"
     t.index ["code"], name: "index_invites_on_code", unique: true
+    t.index ["hole_id"], name: "index_invites_on_hole_id"
     t.index ["user_id"], name: "index_invites_on_user_id"
   end
 
@@ -145,6 +147,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_223835) do
   add_foreign_key "grabs", "holes"
   add_foreign_key "hole_memberships", "holes"
   add_foreign_key "hole_memberships", "users"
+  add_foreign_key "invites", "holes"
   add_foreign_key "notes", "users"
   add_foreign_key "notes", "users", column: "actor_id"
 end

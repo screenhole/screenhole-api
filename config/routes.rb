@@ -29,6 +29,13 @@ Rails.application.routes.draw do
 
         # replaces /chomments
         resources :chat_messages, only: %i[index create destroy]
+
+        # replaces /invites
+        resources :invitations, only: %i[index create] do
+          collection do
+            get :price
+          end
+        end
       end
 
       # legacy chomment support
@@ -45,13 +52,6 @@ Rails.application.routes.draw do
       resources :currency, only: %i[index] do
         collection do
           get :trends
-        end
-      end
-
-      # replaces /invites
-      resources :invitations, only: %i[index create] do
-        collection do
-          get :price
         end
       end
     end

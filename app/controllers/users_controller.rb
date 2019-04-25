@@ -40,6 +40,10 @@ class UsersController < ApplicationController
       invite.update_attribute(:invited_id, user.id)
       jwt_token = Knock::AuthToken.new(payload: user.to_token_payload ).token
 
+      if invite.hole
+        HoleMembership.create!(user: user, hole: invite.hole)
+      end
+
       render json: user, meta: { jwt: jwt_token }
     else
       respond_with_errors(user)
