@@ -3,6 +3,7 @@ class ChatMessage < ApplicationRecord
   belongs_to :hole
 
   after_create :broadcast_via_cable
+  after_create :credit_buttcoin
 
   validates(
     :user,
@@ -28,6 +29,13 @@ class ChatMessage < ApplicationRecord
     ActionCable.server.broadcast(
       hole.cable_channel_name('chomments'),
       ActiveModelSerializers::SerializableResource.new(self).as_json
+    )
+  end
+
+  def credit_buttcoin
+    user.buttcoin_transaction(
+      Buttcoin::AMOUNTS[:create_chomment],
+      "Generated chat message #{id}"
     )
   end
 end
