@@ -1,15 +1,15 @@
 class Api::V2::InvitationsController < Api::V2::ApplicationController
-  before_action :authenticate_user, except: %i[current_price]
+  before_action :authenticate_user, except: %i[price]
+  before_action :load_writable_hole, except: %i[price]
 
   def index
-    render json: current_user.invites
+    render json: current_user.invites.where(hole: @hole)
   end
 
   def create
-    @invite = current_user.invites.new
+    @invite = current_user.invites.new(hole: @hole)
 
     if @invite.save
-      # TODO: debit buttcoin
       render json: @invite
     else
       respond_with_errors(@invite)

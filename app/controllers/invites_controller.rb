@@ -6,17 +6,9 @@ class InvitesController < ApplicationController
   end
 
   def create
-    # check balance
-    unless current_user.buttcoin_balance + Buttcoin::AMOUNTS[:generate_invite] > 0
-      return render json: {
-        error: 'not enough buttcoin',
-      }, status: :unprocessable_entity
-    end
-
     invite = current_user.invites.new
 
     if invite.save
-      current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:generate_invite], "Generated invite #{invite.hashid}")
       render json: invite
     else
       respond_with_errors(invite)
