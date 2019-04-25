@@ -1,5 +1,5 @@
 class GrabsController < ApplicationController
-  before_action :authenticate_user, except: [:index, :show]
+  before_action :authenticate_user, except: %i[index show]
 
   def index
     grabs = Grab.feed(
@@ -11,7 +11,7 @@ class GrabsController < ApplicationController
   end
 
   def show
-    render json: Grab.find(params[:id]), include: [ 'user', 'memos.user' ]
+    render json: Grab.find(params[:id]), include: ['user', 'memos.user']
   end
 
   def create
@@ -41,8 +41,6 @@ class GrabsController < ApplicationController
     end
 
     if grab.save
-      ActionCable.server.broadcast "grabs_messages", ActiveModelSerializers::SerializableResource.new(grab).as_json
-      current_user.buttcoin_transaction(Buttcoin::AMOUNTS[:create_grab], "Created Grab #{grab.hashid}")
       render json: grab
     else
       respond_with_errors(grab)
@@ -55,18 +53,18 @@ class GrabsController < ApplicationController
     if grab.nil?
       render status: 400, json: {
         status: 400,
-        detail: "Could not find grab"
+        detail: 'Could not find grab'
       }
     elsif grab.destroy
       # TODO: send delete over ActionCable
       render json: {
         status: 200,
-        detail: "Success"
+        detail: 'Success'
       }
     else
       render status: 400, json: {
         status: 400,
-        detail: "Could not destroy grab"
+        detail: 'Could not destroy grab'
       }
     end
   end
@@ -74,7 +72,7 @@ class GrabsController < ApplicationController
   def report
     render json: {
       status: 200,
-      detail: "Success"
+      detail: 'Success'
     }
   end
 
@@ -89,9 +87,7 @@ class GrabsController < ApplicationController
 
     @blockees = []
 
-    if current_user
-      @blockees = current_user.blocked.map { |id| User.decode_id(id) }
-    end
+    @blockees = current_user.blocked.map { |id| User.decode_id(id) } if current_user
 
     @blockees
   end

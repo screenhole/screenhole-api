@@ -27,7 +27,6 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
     @grab.hole = @hole
 
     if @grab.save
-      # TODO: ActionCable, Buttcoin credits
       render json: @grab
     else
       respond_with_errors(@grab)

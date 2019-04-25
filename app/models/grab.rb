@@ -16,6 +16,7 @@ class Grab < ApplicationRecord
   after_destroy :delete_media
 
   after_create :broadcast_via_cable
+  after_create :credit_buttcoins
 
   def self.feed(page:, per_page: 25, hole: nil, user_id: nil)
     if user_id.present?
@@ -51,11 +52,18 @@ class Grab < ApplicationRecord
   end
 
   def broadcast_via_cable
-    return unless hole.present?
+    channel_name = hole.present? ? hole.cable_channel_name('grabs') : 'grabs_messages'
 
     ActionCable.server.broadcast(
-      hole.cable_channel_name('grabs'),
+      channel_name,
       ActiveModelSerializers::SerializableResource.new(self).as_json
+    )
+  end
+
+  def credit_buttcoins
+    user.buttcoin_transaction(
+      Buttcoin::AMOUNTS[:create_grab],
+      "Created Grab #{hashid}"
     )
   end
 end
