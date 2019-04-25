@@ -1,10 +1,15 @@
 class NotesChannel < ApplicationCable::Channel
   def subscribed
-    stream_from 'notes_channel'
+    stream_from(
+      channel_name('notes')
+    )
   end
 
   def receive(data)
-    ActionCable.server.broadcast 'notes_channel', data
+    ActionCable.server.broadcast(
+      channel_name('notes'),
+      data
+    )
   end
 
   def unsubscribed
