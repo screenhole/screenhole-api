@@ -69,7 +69,7 @@ class Grab < ApplicationRecord
   def hydrate_accelerator_metadata
     metadata = JSON.parse(
       HTTParty.get(
-        "#{image_public_url};format.json",
+        "#{image_public_url};metadata.json",
         format: :plain
       )
     )
