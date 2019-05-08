@@ -6,14 +6,8 @@ class InviteSerializer < ActiveModel::Serializer
   has_one :invited
 
   def invited
-    User.find(object.invited_id) if object.invited_id
-  end
+    return nil unless object.invited_id.present?
 
-  def is_current_user?
-    begin
-      object.user_id == current_user.id
-    rescue
-      false
-    end
+    User.find_by(id: object.invited_id)
   end
 end
