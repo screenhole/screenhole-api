@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_09_025133) do
+ActiveRecord::Schema.define(version: 2019_05_09_034137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 2019_05_09_025133) do
     t.bigint "cross_ref_id"
     t.index ["cross_ref_type", "cross_ref_id"], name: "index_chomments_on_cross_ref_type_and_cross_ref_id"
     t.index ["user_id"], name: "index_chomments_on_user_id"
+  end
+
+  create_table "grab_comments", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "grab_id"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grab_id"], name: "index_grab_comments_on_grab_id"
+    t.index ["user_id"], name: "index_grab_comments_on_user_id"
   end
 
   create_table "grab_tips", force: :cascade do |t|
@@ -155,6 +165,8 @@ ActiveRecord::Schema.define(version: 2019_05_09_025133) do
   add_foreign_key "buttcoins", "users"
   add_foreign_key "chat_messages", "holes"
   add_foreign_key "chat_messages", "users"
+  add_foreign_key "grab_comments", "grabs"
+  add_foreign_key "grab_comments", "users"
   add_foreign_key "grab_tips", "grabs"
   add_foreign_key "grab_tips", "users"
   add_foreign_key "grabs", "holes"

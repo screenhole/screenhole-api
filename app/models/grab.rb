@@ -8,7 +8,8 @@ class Grab < ApplicationRecord
   belongs_to :user, counter_cache: true
 
   has_many :memos, dependent: :destroy
-  has_many :grab_tips
+  has_many :tips, class_name: 'GrabTip'
+  has_many :comments, class_name: 'GrabComment'
 
   validates_presence_of :image_path
 
@@ -39,7 +40,7 @@ class Grab < ApplicationRecord
   end
 
   def tip_balance
-    grab_tips.pluck(:amount).reject(&:nil?).map(&:to_i).sum
+    tips.pluck(:amount).reject(&:nil?).map(&:to_i).sum
   end
 
   def legacy_tip_balance

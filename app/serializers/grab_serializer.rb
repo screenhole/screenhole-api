@@ -7,9 +7,9 @@ class GrabSerializer < ActiveModel::Serializer
   belongs_to :user
 
   has_many :memos
-  has_many :grab_tips
-  has_many :grab_comments
+  has_many :tips
+  has_many :comments
 
   attribute(:tip_balance) { object.blended_tip_balance }
-  attribute(:comment_count) { object.grab_comments.count }
+  attribute(:comment_count) { object.comments.count }
 end
