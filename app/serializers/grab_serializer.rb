@@ -8,10 +8,8 @@ class GrabSerializer < ActiveModel::Serializer
 
   has_many :memos
   has_many :grab_tips
+  has_many :grab_comments
 
   attribute(:tip_balance) { object.blended_tip_balance }
-
-  def is_current_user?
-    defined? current_user && object.user_id == current_user.id
-  end
+  attribute(:comment_count) { object.grab_comments.count }
 end

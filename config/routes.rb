@@ -24,8 +24,6 @@ Rails.application.routes.draw do
 
           # replaces /memos
           resources :tips, controller: :grab_tips, only: %i[create]
-
-          # TODO
           resources :comments, controller: :grab_comments, only: %i[create destroy]
         end
 
