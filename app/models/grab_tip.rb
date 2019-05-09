@@ -20,10 +20,6 @@ class GrabTip < ApplicationRecord
   end
 
   def must_have_funds
-    return if (
-      user.buttcoin_balance + amount
-    ).positive?
-
-    errors.add(:base, 'insufficient funds')
+    errors.add(:base, 'insufficient funds') if user.blank? || (user.buttcoin_balance + amount) <= 0
   end
 end
