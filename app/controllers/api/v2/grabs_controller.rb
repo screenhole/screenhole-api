@@ -13,10 +13,9 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
   end
 
   def show
-    @grab = Grab.find_by!(
-      hashid: params[:id],
-      hole: @hole
-    )
+    @grab = Grab.find_by_hashid!(params[:id])
+
+    head :forbidden unless @grab.hole == @hole
 
     render json: @grab
   end
@@ -34,10 +33,9 @@ class Api::V2::GrabsController < Api::V2::ApplicationController
   end
 
   def destroy
-    @grab = Grab.find_by!(
-      hashid: params[:id],
-      hole: @hole
-    )
+    @grab = Grab.find_by_hashid!(params[:id])
+
+    head :forbidden unless @grab.hole == @hole
 
     if @grab.destroy
       head :no_content
