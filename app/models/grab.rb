@@ -42,6 +42,14 @@ class Grab < ApplicationRecord
     grab_tips.pluck(:amount).reject(&:nil?).map(&:to_i).sum
   end
 
+  def legacy_tip_balance
+    memos.where(variant: :chomment).pluck(:message).select { |m| m.start_with?('💸') }.count * 69
+  end
+
+  def blended_tip_balance
+    tip_balance + legacy_tip_balance
+  end
+
   def image_public_url(direct = false)
     url = AWS_S3_BUCKET.object(image_path).public_url
     url.gsub!('s3.amazonaws.com', 'accelerator.net') unless direct
