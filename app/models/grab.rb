@@ -8,6 +8,7 @@ class Grab < ApplicationRecord
   belongs_to :user, counter_cache: true
 
   has_many :memos, dependent: :destroy
+  has_many :grab_tips
 
   validates_presence_of :image_path
 

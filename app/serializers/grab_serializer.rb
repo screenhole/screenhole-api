@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # :nodoc:
 class GrabSerializer < ActiveModel::Serializer
   attribute :hashid, key: :id
@@ -9,6 +7,7 @@ class GrabSerializer < ActiveModel::Serializer
   belongs_to :user
 
   has_many :memos
+  has_many :grab_tips
 
   def is_current_user?
     defined? current_user && object.user_id == current_user.id
