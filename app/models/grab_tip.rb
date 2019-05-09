@@ -2,7 +2,7 @@ class GrabTip < ApplicationRecord
   belongs_to :grab
   belongs_to :user
 
-  validate :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validate :must_have_funds, on: :create
 
   after_create :debit_buttcoin_from_tipper

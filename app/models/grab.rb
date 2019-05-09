@@ -38,6 +38,10 @@ class Grab < ApplicationRecord
     grabs.page(page).per(per_page).reverse_order
   end
 
+  def tip_balance
+    grab_tips.pluck(:amount).reject(&:nil?).map(&:to_i).sum
+  end
+
   def image_public_url(direct = false)
     url = AWS_S3_BUCKET.object(image_path).public_url
     url.gsub!('s3.amazonaws.com', 'accelerator.net') unless direct
