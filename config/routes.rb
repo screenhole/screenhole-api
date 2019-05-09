@@ -22,9 +22,11 @@ Rails.application.routes.draw do
             post :report
           end
 
+          # replaces /memos
+          resources :tips, controller: :grab_tips, only: %i[create]
+
           # TODO
           resources :comments, controller: :grab_comments, only: %i[create destroy]
-          resources :tips, controller: :grab_tips, only: %i[create]
         end
 
         # replaces /chomments

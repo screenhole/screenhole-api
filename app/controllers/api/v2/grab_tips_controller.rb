@@ -6,7 +6,8 @@ class Api::V2::GrabTipsController < Api::V2::ApplicationController
   def create
     @grab_tip = GrabTip.new(
       grab: @grab,
-      user: current_user
+      user: current_user,
+      amount: params[:amount]
     )
 
     if @grab_tip.save
