@@ -20,6 +20,6 @@ class Api::V2::GrabTipsController < Api::V2::ApplicationController
   private
 
   def load_grab
-    @grab = @hole.grabs.find(params[:id])
+    @grab = @hole.grabs.find(params[:grab_id])
   end
 end
