@@ -4,6 +4,8 @@ class Api::V2::GrabTipsController < Api::V2::ApplicationController
   before_action :load_grab
 
   def create
+    return head :forbidden unless @grab.hole == @hole
+
     @grab_tip = GrabTip.new(
       grab: @grab,
       user: current_user,
@@ -20,6 +22,6 @@ class Api::V2::GrabTipsController < Api::V2::ApplicationController
   private
 
   def load_grab
-    @grab = @hole.grabs.find_by_hashid!(params[:grab_id])
+    @grab = Grab.find_by_hashid!(params[:grab_id])
   end
 end
