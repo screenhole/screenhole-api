@@ -36,14 +36,14 @@ class User < ApplicationRecord
 
   before_validation :normalize_username
 
-  scope :visible_in_directory, -> {
-    left_joins(:grabs).
-    group(:id).
-    having('COUNT(grabs.id) >= 5').
-    order('COUNT(grabs.id) DESC')
+  scope :visible_in_directory, lambda {
+    left_joins(:grabs)
+      .group(:id)
+      .having('COUNT(grabs.id) >= 5')
+      .order('COUNT(grabs.id) DESC')
   }
 
-  def buttcoin_transaction(amount, note=nil)
+  def buttcoin_transaction(amount, note = nil)
     Buttcoin.create(user: self, amount: amount, note: note)
   end
 
@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def gravatar_hash
-    Digest::MD5.hexdigest(email || "")
+    Digest::MD5.hexdigest(email || '')
   end
 
   def to_token_payload
@@ -73,29 +73,30 @@ class User < ApplicationRecord
   end
 
   def self.from_token_payload(payload)
-    if payload && payload["sub"]
-      self.find payload["sub"]
+    if payload && payload['sub']
+      find payload['sub']
     else
       begin
         _decoded_token = Base64.decode64(payload)
         _token = Knock::AuthToken.new(token: _decoded_token)
-        if _token.payload && _token.payload["sub"]
-          self.find _token.payload["sub"]
+        if _token.payload && _token.payload['sub']
+          find _token.payload['sub']
         else
-          fail 'Missing sub payload'
+          raise 'Missing sub payload'
         end
-      rescue
+      rescue StandardError
         return nil
       end
     end
   end
 
   def self.from_token_request(request)
-    username = request.params["auth"] && request.params["auth"]["username"]
-    self.find_by(username: username)
+    username = request.params['auth'] && request.params['auth']['username']
+    find_by(username: username)
   end
 
   private
+
   def normalize_username
     self.username = username.strip.downcase if username
   end

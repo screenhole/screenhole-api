@@ -54,6 +54,14 @@ Rails.application.routes.draw do
           get :trends
         end
       end
+
+      # replaces /users
+      resources :users, only: %i[index show create] do
+        collection do
+          get :me
+          post :me, to: 'users#update'
+        end
+      end
     end
   end
 
