@@ -46,10 +46,10 @@ RSpec.describe Hole, type: :model do
     it 'returns a hash of rules' do
       expect(subject.rules).to include(
         {
-          chomments_enabled: false,
-          web_upload_enabled: false,
+          chomments_enabled: true,
+          web_upload_enabled: true,
           private_grabs_enabled: false,
-          chat_enabled: false
+          chat_enabled: true
         }
       )
     end
