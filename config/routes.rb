@@ -60,6 +60,8 @@ Rails.application.routes.draw do
         collection do
           get :me
           post :me, to: 'users#update'
+
+          post :login, to: 'user_token#create'
         end
       end
     end
