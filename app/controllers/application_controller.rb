@@ -22,10 +22,6 @@ class ApplicationController < ActionController::API
 
   private
 
-  def authenticate_thinko_staff
-    raise ActionController::RoutingError, 'not staff' unless current_user&.is_staff?
-  end
-
     def set_raven_context
       context = {}
       context.merge!({ user_id: current_user.id, email: current_user.email }) unless current_user.blank?
