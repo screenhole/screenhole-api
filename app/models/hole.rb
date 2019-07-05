@@ -41,6 +41,12 @@ class Hole < ApplicationRecord
     find_by!(subdomain: subdomain)
   end
 
+  def self.from_subdomain_or_nil(subdomain)
+    return nil if subdomain == 'root'
+
+    find_by(subdomain: subdomain)
+  end
+
   def owner
     hole_memberships.order('created_at ASC').first.try(&:user)
   end

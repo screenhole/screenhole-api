@@ -101,7 +101,7 @@ Rails.application.routes.draw do
       get 'token/refresh' => 'users#refresh_token'
     end
 
-    resources :grabs, only: %i[index show]
+    resources :grabs, only: %i[index show], controller: 'api/v2/grabs'
   end
 
   # for old clients

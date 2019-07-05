@@ -7,6 +7,7 @@ class Api::V2::UsersController < Api::V2::ApplicationController
   end
 
   def show
+    # TODO: is this route used?
     render json: @user, include: ['grabs.*']
   end
 

@@ -20,13 +20,14 @@ class Grab < ApplicationRecord
   after_create :credit_buttcoins
 
   def self.feed(page:, per_page: 25, hole: nil, user_id: nil)
-    if user_id.present?
-      return User.find(user_id)
-                 .grabs
-                 .page(page)
-                 .per(per_page)
-                 .reverse_order
-    end
+    # NB: This looks to be deprecated for API v2
+    # if user_id.present?
+    #   return User.find(user_id)
+    #              .grabs
+    #              .page(page)
+    #              .per(per_page)
+    #              .reverse_order
+    # end
 
     grabs = Grab.includes(:user, :memos)
 
@@ -35,6 +36,19 @@ class Grab < ApplicationRecord
             else
               grabs.where(hole_id: nil)
             end
+
+    # If a hole is given, and is private, only return grabs if the passed user
+    # is a member of that hole. It looks like a hole is always passed in the v2
+    # API, so feed() is essentially always returning grabs scoped to a single hole.
+    if hole.present? && hole.private_grabs_enabled?
+      # TODO write tests
+      grabs = if user_id.present? && hole.users.collect(&:id).include?(user_id)
+        grabs
+      else
+        # Force an empty resultset to be returned
+        grabs.where('1=0')
+      end
+    end
 
     grabs.page(page).per(per_page).reverse_order
   end
