@@ -19,7 +19,11 @@ class Api::V2::HolesController < Api::V2::ApplicationController
   end
 
   def show
-    render json: @hole
+    if !@hole.private_grabs_enabled? || @hole.users.include?(current_user)
+      render json: @hole
+    else
+      render status: :unauthorized
+    end
   end
 
   def update
